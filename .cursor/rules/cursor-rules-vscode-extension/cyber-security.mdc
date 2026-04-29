@@ -3,7 +3,7 @@ description: Secure development—secrets, input, crypto, and common web risks
 alwaysApply: true
 ---
 
-# Cybersecurity and secure coding
+# Secure code, data, and dependencies by default
 
 - **Secrets**: Never commit API keys, tokens, or passwords. Use environment variables or a secrets manager; rotate credentials that may have leaked.
 - **Input**: Treat all external input as untrusted—validate type, length, and allowed values; use parameterized queries for SQL; encode output for the correct context (HTML, URL, JSON).

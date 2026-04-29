@@ -3,7 +3,7 @@ description: Reuse existing code—search, extract, and share before duplicating
 alwaysApply: true
 ---
 
-# Reuse over duplication
+# Reuse shared code before duplicating it
 
 - **Search first**: Before writing a helper, look for existing utilities, hooks, services, or types that already solve the problem.
 - **Extract on the third copy**: Two similar snippets can be a coincidence; three is a signal—lift the shared idea into one place.

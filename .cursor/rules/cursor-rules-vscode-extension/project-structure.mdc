@@ -3,7 +3,7 @@ description: Keep the repository structure clean, predictable, and feature-orien
 alwaysApply: true
 ---
 
-# Project structure
+# Organize the repository by feature and convention
 
 - **Predictable layout**: New files go where similar files already live. If nothing fits, propose a folder rather than dropping files at the root.
 - **Feature-first**: Group by feature/domain (e.g. `src/features/billing/`) over generic buckets (`src/everything/`). Generic folders like `utils/` or `components/` should hold cross-feature code only.

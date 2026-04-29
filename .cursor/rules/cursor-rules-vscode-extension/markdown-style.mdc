@@ -4,7 +4,7 @@ globs: "**/*.{md,mdx}"
 alwaysApply: false
 ---
 
-# Markdown style
+# Format Markdown for readability and clean diffs
 
 Apply when creating or editing Markdown files (READMEs, docs, RFCs, ADRs, release notes). Keep files scannable and diff-friendly.
 

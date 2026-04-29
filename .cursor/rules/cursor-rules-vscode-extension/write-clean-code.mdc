@@ -3,7 +3,7 @@ description: Readable, maintainable code—naming, structure, and simplicity
 alwaysApply: true
 ---
 
-# Clean code
+# Write clean, maintainable code
 
 - **Names**: Prefer intention-revealing names over comments that explain obscurity. Avoid abbreviations unless they are universal in the domain.
 - **Functions**: One clear responsibility; keep them short enough to read without scrolling. Prefer early returns over deep nesting.

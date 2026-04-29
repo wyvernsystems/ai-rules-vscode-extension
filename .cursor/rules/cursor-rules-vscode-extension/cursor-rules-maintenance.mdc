@@ -1,12 +1,12 @@
 ---
-description: Edit, review quality, deprecate, and document Cursor rules in .cursor/rules
-globs: "**/.cursor/rules/*.mdc"
+description: Edit, review quality, deprecate, and document Cursor rules in this repo’s rules folder
+globs: "**/.cursor/rules/cursor-rules-vscode-extension/**/*.mdc"
 alwaysApply: false
 ---
 
-# Cursor rules maintenance
+# Maintain and update Cursor rules
 
-Applies when changing files under `.cursor/rules/`. Format and placement: [how-to-write-rules.mdc](mdc:.cursor/rules/how-to-write-rules.mdc).
+Applies when changing files under `.cursor/rules/cursor-rules-vscode-extension/`. Format and placement: [how-to-write-rules.mdc](mdc:.cursor/rules/cursor-rules-vscode-extension/how-to-write-rules.mdc).
 
 ## Add a new rule when
 

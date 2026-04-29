@@ -3,7 +3,7 @@ description: Prefer LTS / current stable versions for languages, runtimes, compi
 alwaysApply: true
 ---
 
-# Use LTS / stable versions
+# Prefer LTS and stable runtimes, compilers, and libraries
 
 - **Default to LTS**: For runtimes and toolchains (Node.js, Python, Java, .NET, Go, Rust, PostgreSQL, etc.) target the active **LTS** or current stable release—never end-of-life or pre-release builds in production code.
 - **Pin where it matters**: Lock major versions for languages and frameworks (`engines` in `package.json`, `.nvmrc`, `.python-version`, `pyproject.toml`, `go.mod`, `Cargo.toml`, `Dockerfile` base images). CI should use the same version a developer runs.
