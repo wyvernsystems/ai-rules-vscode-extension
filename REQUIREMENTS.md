@@ -14,6 +14,23 @@ details belong in the code or in the rule files.
   (`role-developer` on, other roles + `test-rules/*` off). Existing rules
   folders are never overwritten by the auto-install path. The behavior is
   gated by `aiRules.autoInstallOnOpenWorkspace` (default `true`).
+- The `.cursor/rules/ai-rules/` auto-install is further gated by
+  `aiRules.installCursorRulesFolder`, a tri-state setting:
+  - `"auto"` (default): create the folder only when the host application is
+    Cursor. Detected via `vscode.env.uriScheme === "cursor"` or
+    `vscode.env.appName` containing `"cursor"` (case-insensitive).
+  - `"always"`: create the folder regardless of host (useful when committing
+    rules for Cursor-using teammates while editing in plain VS Code).
+  - `"never"`: never auto-install. Manual install / reset / sidebar
+    commands still work.
+- When the resolved policy skips the auto-install, the extension shows a
+  one-time informational toast on non-Cursor hosts ("Install now",
+  "Open setting", "Dismiss"). The notice is persisted via `globalState`
+  under `aiRules.nonCursorHostNoticeShown` so it never repeats per machine.
+- Cline mirroring (`.clinerules/ai-rules/`) is independent of the Cursor
+  install policy: it runs whenever Cline is installed and
+  `aiRules.autoSyncClineWhenInstalled` is on, even if the `.cursor/` folder
+  is skipped.
 - The sidebar tree view colors active rule labels green and disabled rule
   labels muted gray (via a `FileDecorationProvider`) so on / off state is
   visible without reading the description column.

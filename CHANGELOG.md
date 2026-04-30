@@ -6,6 +6,46 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-04-30
+
+### Added
+
+- **Host detection.** New `src/cursor.ts` exposes `isCursorHost()`, which
+  returns `true` when `vscode.env.uriScheme === "cursor"` or
+  `vscode.env.appName` contains `"cursor"` (case-insensitive). Symmetric
+  with the existing Cline detection in `src/cline.ts`.
+- **`aiRules.installCursorRulesFolder` setting.** Tri-state policy
+  controlling the `.cursor/rules/ai-rules/` auto-install:
+  - `"auto"` (default): only when the host is Cursor.
+  - `"always"`: always (existing behavior; useful when committing rules
+    for Cursor-using teammates from plain VS Code).
+  - `"never"`: never. Manual install / reset / sidebar commands still
+    work.
+- **One-time non-Cursor host notice.** When the policy resolves to skip
+  the auto-install, the user sees a single info toast with "Install now",
+  "Open setting", and "Dismiss" actions. Persisted via `globalState` so
+  it never repeats per machine.
+
+### Changed
+
+- **Auto-install split into Cursor and Cline tracks.** Cline mirroring
+  (`.clinerules/ai-rules/`) is now independent of the Cursor folder
+  install: a Cline user on plain VS Code still gets `.clinerules/ai-rules/`
+  even when `.cursor/rules/ai-rules/` is skipped.
+- **Marketplace icon refreshed** with a new open-book design (binary +
+  graph + AI / gavel motif). White background removed (transparent
+  alpha) so the icon looks correct on both light and dark themes. The
+  high-resolution master is preserved locally as `icon-source.png`
+  (gitignored, excluded from the VSIX).
+
+### Unchanged
+
+- All command IDs, settings names already in use, view IDs, and on-disk
+  layouts (`.cursor/rules/ai-rules/`, `bundled/ai-rules/`,
+  `.clinerules/ai-rules/`, `<globalStorage>/ai-rules-mirror/ai-rules/`)
+  are unchanged. Existing keybindings, settings overrides, and rule
+  folders keep working without migration.
+
 ## [1.2.0] - 2026-04-29
 
 ### Renamed

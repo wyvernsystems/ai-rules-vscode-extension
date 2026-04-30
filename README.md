@@ -164,9 +164,10 @@ the command palette.
 | Setting | Default | Effect |
 |---------|---------|--------|
 | `aiRules.autoInstallOnOpenWorkspace` | `true` | When you open a workspace that has no `.cursor/rules/ai-rules/` folder yet, install the bundled rule pack automatically. Never overwrites an existing folder. |
+| `aiRules.installCursorRulesFolder` | `"auto"` | Policy for the `.cursor/rules/ai-rules/` auto-install. `"auto"` only creates it when the host is Cursor, `"always"` creates it in any host (e.g. you're committing the folder for Cursor-using teammates while editing in plain VS Code), `"never"` skips it entirely. Manual install / reset commands ignore this. |
 | `aiRules.colorRulesInExplorer` | `true` | Tint rule files in VS Code's Explorer: `.mdc` (active) appears green and `.mdc.disabled` (off) appears muted gray, anywhere under `.cursor/rules/ai-rules/`. |
 | `aiRules.promptInstallOnUpdate` | `true` | When the extension version changes, ask whether to refresh workspace rules from the bundled copy. |
-| `aiRules.autoSyncClineWhenInstalled` | `true` | If Cline is installed, also mirror bundled `.mdc` rules into `.clinerules/ai-rules/` whenever rules change. |
+| `aiRules.autoSyncClineWhenInstalled` | `true` | If Cline is installed, also mirror bundled `.mdc` rules into `.clinerules/ai-rules/` whenever rules change. Independent of `installCursorRulesFolder` — Cline users on plain VS Code still get the Cline mirror without the `.cursor/` folder. |
 
 ## Every rule that ships with this extension
 

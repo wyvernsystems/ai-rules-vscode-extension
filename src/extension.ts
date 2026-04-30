@@ -1,6 +1,11 @@
 import * as path from "node:path";
 import * as vscode from "vscode";
 import { isClineInstalled } from "./cline";
+import {
+  isCursorHost,
+  readCursorInstallPolicy,
+  shouldAutoInstallCursorRules,
+} from "./cursor";
 import { listBundledMdcs, readBundleManifest, type BundleManifest } from "./manifest";
 import {
   applyModeProfile,
@@ -40,6 +45,7 @@ import {
 } from "./sidebarTreeView";
 
 const LAST_SEEN_VERSION_KEY = "aiRules.lastSeenExtensionVersion";
+const NON_CURSOR_NOTICE_KEY = "aiRules.nonCursorHostNoticeShown";
 
 function getAiRulesBoolean(key: string, defaultValue: boolean): boolean {
   const v = vscode.workspace.getConfiguration("aiRules").get(key);
@@ -133,11 +139,59 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
   );
 
   /**
+   * Shows a one-time hint when the user is on a non-Cursor host and the
+   * `installCursorRulesFolder` policy resolved to "skip the auto-install".
+   * Persisted via `globalState` so the toast never repeats per-machine
+   * regardless of how many workspaces are opened. Manual install / reset
+   * commands work irrespective of this banner.
+   */
+  const maybeShowNonCursorNotice = async (): Promise<void> => {
+    if (readCursorInstallPolicy() !== "auto") {
+      return;
+    }
+    if (isCursorHost()) {
+      return;
+    }
+    const alreadyShown = context.globalState.get<boolean>(NON_CURSOR_NOTICE_KEY) === true;
+    if (alreadyShown) {
+      return;
+    }
+    await context.globalState.update(NON_CURSOR_NOTICE_KEY, true);
+    const pick = await vscode.window.showInformationMessage(
+      `AI Rulebook: detected ${vscode.env.appName} (not Cursor). Skipping the .cursor/rules/ai-rules/ auto-install. ` +
+        `Run "AI Rulebook: Install / update rules in workspace" if you want it anyway, or set ` +
+        `"aiRules.installCursorRulesFolder" to "always" to disable this check.`,
+      "Install now",
+      "Open setting",
+      "Dismiss"
+    );
+    if (pick === "Install now") {
+      await vscode.commands.executeCommand("aiRules.installWorkspace");
+    } else if (pick === "Open setting") {
+      await vscode.commands.executeCommand(
+        "workbench.action.openSettings",
+        "aiRules.installCursorRulesFolder"
+      );
+    }
+  };
+
+  /**
    * Idempotent first-time install: if the workspace has no `.cursor/rules/ai-rules`
    * yet, drop the bundled defaults in and start the project in Build mode
    * (`role-developer` on, other roles + test rules off). Existing rules folders
    * are left untouched so the user never gets a surprise overwrite—use the
    * explicit "Install / update" or "Reset" commands for that.
+   *
+   * Gated by `aiRules.installCursorRulesFolder`:
+   *   - "auto"   (default): install only when the host is Cursor.
+   *   - "always": install regardless of host (useful when committing the
+   *               folder for Cursor-using teammates while editing in plain
+   *               VS Code).
+   *   - "never":  never auto-install. Manual commands still work.
+   *
+   * Cline mirroring runs independently and is gated by its own setting plus
+   * the Cline-installed check, so a Cline user on plain VS Code still gets
+   * `.clinerules/ai-rules/` even if `.cursor/rules/` is skipped here.
    */
   const autoInstallIfMissing = async (): Promise<void> => {
     if (!getAiRulesBoolean("autoInstallOnOpenWorkspace", true)) {
@@ -154,6 +208,26 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     if (!(await pathExists(bundleDir))) {
       return;
     }
+
+    const writeCursorRules = shouldAutoInstallCursorRules();
+    const wantCline =
+      getAiRulesBoolean("autoSyncClineWhenInstalled", true) && isClineInstalled();
+
+    if (!writeCursorRules) {
+      // Cline still mirrors independently; only skip the .cursor/ install.
+      if (wantCline) {
+        await syncBundledMdcsToClinerules(root, bundleDir, manifest);
+        vscode.window.showInformationMessage(
+          "AI Rulebook: synced bundled rules to `.clinerules/ai-rules/`. " +
+            "Skipped `.cursor/rules/ai-rules/` (host is not Cursor — change " +
+            "`aiRules.installCursorRulesFolder` to `always` to install anyway)."
+        );
+      }
+      await maybeShowNonCursorNotice();
+      treeProvider.refresh();
+      return;
+    }
+
     await installBundleToRulesDir(bundleDir, rulesDir, manifest, {
       applyEvolveOffUnlessWasEnabled: true,
     });
@@ -161,7 +235,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     const parts = [
       "AI Rulebook: installed default rules into `.cursor/rules/ai-rules/` and started in Build mode (developer role on).",
     ];
-    if (getAiRulesBoolean("autoSyncClineWhenInstalled", true) && isClineInstalled()) {
+    if (wantCline) {
       await syncBundledMdcsToClinerules(root, bundleDir, manifest);
       parts.push("Cline: synced to `.clinerules/ai-rules/`.");
     }

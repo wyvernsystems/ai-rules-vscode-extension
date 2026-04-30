@@ -2,7 +2,7 @@
   "name": "ai-rulebook",
   "displayName": "AI Rulebook",
   "description": "AI Rulebook — install and manage a curated AI agent rule pack for Cursor under .cursor/rules/ai-rules/, with optional Cline sync to .clinerules/ai-rules/.",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "publisher": "WyvernSystemsLLC",
   "license": "MIT",
   "icon": "icon.png",
@@ -246,6 +246,21 @@
           "type": "boolean",
           "default": true,
           "description": "When opening a workspace that has no .cursor/rules/ai-rules folder yet, install the bundled rule pack automatically. Existing rules folders are never overwritten."
+        },
+        "aiRules.installCursorRulesFolder": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "always",
+            "never"
+          ],
+          "enumDescriptions": [
+            "Auto-install .cursor/rules/ai-rules/ only when the host application is Cursor (recommended).",
+            "Always auto-install .cursor/rules/ai-rules/, even in plain VS Code (useful when committing rules for Cursor-using teammates).",
+            "Never auto-install .cursor/rules/ai-rules/. Manual install / reset / sidebar commands still work."
+          ],
+          "default": "auto",
+          "description": "Policy for auto-creating .cursor/rules/ai-rules/ when the folder is missing. Manual commands ignore this setting. Cline mirroring (.clinerules/ai-rules/) is gated separately by aiRules.autoSyncClineWhenInstalled and the Cline-installed check."
         },
         "aiRules.colorRulesInExplorer": {
           "type": "boolean",
