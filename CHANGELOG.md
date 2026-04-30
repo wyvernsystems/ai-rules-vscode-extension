@@ -6,6 +6,17 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+## [1.3.1] - 2026-04-30
+
+### Changed
+
+- **Marketplace icon refined.** Regenerated `icon.png` from a cleaner
+  background-removed source. Pure black is mapped to transparent with a
+  soft 25→80 luminance ramp for the glow halo (no alpha-unblending), so
+  the cyan glow stays vibrant and the dark book pages remain readable
+  on light themes. `icon-source.png` updated locally; still gitignored
+  and excluded from the VSIX.
+
 ## [1.3.0] - 2026-04-30
 
 ### Added
