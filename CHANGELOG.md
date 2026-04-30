@@ -6,6 +6,17 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+## [1.1.1] - 2026-04-29
+
+### Changed
+
+- **Repository URL updated.** `package.json` `homepage`, `bugs.url`, and
+  `repository.url` now point at
+  `https://github.com/wyvernsystems/ai-rulebook-vscode-extension` (the repo
+  was renamed from `cursor-rules-vscode-extension`). Marketplace package id
+  (`WyvernSystemsLLC.ai-rules`), command IDs, settings, view IDs, and the
+  on-disk rules layout are unchanged.
+
 ## [1.1.0] - 2026-04-29
 
 ### Changed
