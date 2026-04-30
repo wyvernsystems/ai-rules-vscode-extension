@@ -2,7 +2,7 @@
   "name": "ai-rules",
   "displayName": "AI Rules",
   "description": "Install and manage Wyvern AI agent project rules under .cursor/rules/ai-rules (Cursor) with optional Cline sync to .clinerules/ai-rules/.",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "publisher": "wyvernsystems",
   "license": "MIT",
   "icon": "icon.png",
@@ -230,6 +230,11 @@
     "configuration": {
       "title": "AI Rules",
       "properties": {
+        "aiRules.autoInstallOnOpenWorkspace": {
+          "type": "boolean",
+          "default": true,
+          "description": "When opening a workspace that has no .cursor/rules/ai-rules folder yet, install the bundled rule pack automatically. Existing rules folders are never overwritten."
+        },
         "aiRules.promptInstallOnUpdate": {
           "type": "boolean",
           "default": true,

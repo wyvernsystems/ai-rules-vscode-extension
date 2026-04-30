@@ -108,6 +108,48 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     })
   );
 
+  /**
+   * Idempotent first-time install: if the workspace has no `.cursor/rules/ai-rules`
+   * yet, drop the bundled defaults in. Existing rules folders are left untouched
+   * so the user never gets a surprise overwrite—use the explicit
+   * "Install / update" or "Reset" commands for that.
+   */
+  const autoInstallIfMissing = async (): Promise<void> => {
+    if (!getAiRulesBoolean("autoInstallOnOpenWorkspace", true)) {
+      return;
+    }
+    const root = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
+    if (!root) {
+      return;
+    }
+    const rulesDir = workspaceRulesDir(root);
+    if (await pathExists(rulesDir)) {
+      return;
+    }
+    if (!(await pathExists(bundleDir))) {
+      return;
+    }
+    await installBundleToRulesDir(bundleDir, rulesDir, manifest, {
+      applyEvolveOffUnlessWasEnabled: true,
+    });
+    const parts = [
+      "AI Rules: installed default rules into `.cursor/rules/ai-rules/`.",
+    ];
+    if (getAiRulesBoolean("autoSyncClineWhenInstalled", true) && isClineInstalled()) {
+      await syncBundledMdcsToClinerules(root, bundleDir, manifest);
+      parts.push("Cline: synced to `.clinerules/ai-rules/`.");
+    }
+    vscode.window.showInformationMessage(parts.join(" "));
+    await showPackStatusInOutput(rulesOutput, rulesDir, mdcs);
+    treeProvider.refresh();
+  };
+
+  context.subscriptions.push(
+    vscode.workspace.onDidChangeWorkspaceFolders(() => {
+      void autoInstallIfMissing();
+    })
+  );
+
   const register = (command: string, fn: () => Promise<void>) => {
     context.subscriptions.push(
       vscode.commands.registerCommand(command, async () => {
@@ -404,6 +446,8 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     await showPackStatusInOutput(rulesOutput, workspaceRulesDir(root), mdcs);
     treeProvider.refresh();
   });
+
+  await autoInstallIfMissing();
 
   const current = context.extension.packageJSON.version as string;
   const prev = context.globalState.get<string>(LAST_SEEN_VERSION_KEY);

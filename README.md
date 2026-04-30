@@ -41,17 +41,93 @@ and start chatting.
 ## Quickstart
 
 1. Install **AI Rules** in Cursor or VS Code.
-2. Open the project you want the rules to apply to.
+2. Open the project you want the rules to apply to. The extension drops the
+   bundled rule pack into `.cursor/rules/ai-rules/` automatically the first
+   time it sees the project (no overwrite if you already have a folder there).
 3. Click the checklist icon in the **activity bar** (left side) to open the
-   **AI Rules** sidebar — or run **`AI Rules: Install / update rules in workspace`**
-   from the command palette.
-4. Confirm install. The extension copies all rules into
-   `.cursor/rules/ai-rules/` (and into `.clinerules/ai-rules/` if you have
-   Cline installed).
-5. Toggle individual rules with the checkboxes in the sidebar, or pick a
+   **AI Rules** sidebar.
+4. Toggle individual rules with the checkboxes in the sidebar, or pick a
    preset with the **Mode — Plan / Build / Test / Role…** buttons at the top
    of the sidebar.
-6. Start chatting. The AI now follows the rules you have turned on.
+5. Start chatting. The AI now follows the rules you have turned on.
+
+To opt out of the first-time auto-install, set
+`aiRules.autoInstallOnOpenWorkspace` to `false` and run
+**`AI Rules: Install / update rules in workspace`** when you want it.
+
+## All commands
+
+Every command lives under the **AI Rules:** prefix in the command palette.
+
+### Install / update
+
+| Command | Plain English |
+|---------|---------------|
+| Install / update rules in workspace | Copies all bundled rules into `.cursor/rules/ai-rules/`. The `evolve-rules` rule starts off unless it was already on. Auto-mirrors to Cline if Cline is installed. |
+| Reset workspace rules folder to defaults… | Deletes the workspace rules folder and replaces it with the bundled defaults. Removes any extra rules you (or the AI) added. |
+| Sync bundled rules to Cline (`.clinerules/ai-rules`) | Manually mirrors the bundled `.mdc` rules into `.clinerules/ai-rules/` (the format Cline reads). |
+
+### Turn rules on or off
+
+| Command | Plain English |
+|---------|---------------|
+| Enable all rules (workspace) | Turns every bundled rule **on** in this project. |
+| Disable all rules (workspace) | Turns every bundled rule **off** in this project (renames to `.mdc.disabled`). |
+| Enable or disable a single rule… | Pops up a picker for one rule and flips it on or off. |
+| Enable every rule in this folder | (Sidebar) Turns every rule under the picked subfolder on. |
+| Disable every rule in this folder | (Sidebar) Turns every rule under the picked subfolder off. |
+
+### Modes
+
+| Command | Plain English |
+|---------|---------------|
+| Mode — Plan | Architect role on; tests off. |
+| Mode — Build | Developer role on; tests off. |
+| Mode — Test | Tester role on; all `test-rules/*` on. |
+| Mode — Role… | Pick a single role; the others get turned off. |
+
+### Global mirror (cross-project)
+
+The "global mirror" is a per-extension copy under VS Code / Cursor's global
+storage. You can populate it once and then push it into any project.
+
+| Command | Plain English |
+|---------|---------------|
+| Enable all rules (global mirror) | Refreshes the extension's global mirror from the bundle. |
+| Disable all rules (global mirror) | Removes the global mirror. |
+| Copy global mirror into workspace | Pushes the global mirror into the current project's rules folder. |
+
+### Inspect / refresh
+
+| Command | Plain English |
+|---------|---------------|
+| Show pack status (green = active) | Opens the **Output → AI Rules** channel and lists every rule (green = on, dim = off). |
+| Refresh sidebar | Re-reads the rules folder from disk and redraws the sidebar tree. |
+| Open rule file | Opens a specific `.mdc` in the editor (used by the sidebar tree). |
+
+## Modes
+
+A "mode" is a one-click preset that turns specific rules on and others off.
+**Always-on coding, documentation, and meta rules are not touched by modes** —
+they keep running across every mode.
+
+| Mode | Effect |
+|------|--------|
+| **Plan** | Turns on `role-architect`. Turns off all other roles and all test rules. Use when you want the assistant to design / discuss before coding. |
+| **Build** | Turns on `role-developer`. Turns off all other roles and all test rules. Use when you want the assistant to write production code. |
+| **Test** | Turns on `role-tester` and **every** rule under `test-rules/`. Turns off the other roles. Use when you want the assistant to write tests. |
+| **Role…** | Pops up a picker so you can turn on a single role (and turn off the others). Doesn't touch test rules. |
+
+You can also flip individual rules manually any time, in the sidebar or via
+the command palette.
+
+## Settings
+
+| Setting | Default | Effect |
+|---------|---------|--------|
+| `aiRules.autoInstallOnOpenWorkspace` | `true` | When you open a workspace that has no `.cursor/rules/ai-rules/` folder yet, install the bundled rule pack automatically. Never overwrites an existing folder. |
+| `aiRules.promptInstallOnUpdate` | `true` | When the extension version changes, ask whether to refresh workspace rules from the bundled copy. |
+| `aiRules.autoSyncClineWhenInstalled` | `true` | If Cline is installed, also mirror bundled `.mdc` rules into `.clinerules/ai-rules/` whenever rules change. |
 
 ## Every rule that ships with this extension
 
@@ -109,79 +185,6 @@ These change **who the assistant is talking to**.
 | `write-regression-tests.mdc` | One test per fixed bug; reference issue / PR. |
 | `write-integration-tests.mdc` | Real boundaries (DB, HTTP, queue); ephemeral environments. |
 | `write-end-to-end-tests.mdc` | Top user journeys; stable selectors; flakes are bugs. |
-
-## Modes
-
-A "mode" is a one-click preset that turns specific rules on and others off.
-**Always-on coding, documentation, and meta rules are not touched by modes** —
-they keep running across every mode.
-
-| Mode | Effect |
-|------|--------|
-| **Plan** | Turns on `role-architect`. Turns off all other roles and all test rules. Use when you want the assistant to design / discuss before coding. |
-| **Build** | Turns on `role-developer`. Turns off all other roles and all test rules. Use when you want the assistant to write production code. |
-| **Test** | Turns on `role-tester` and **every** rule under `test-rules/`. Turns off the other roles. Use when you want the assistant to write tests. |
-| **Role…** | Pops up a picker so you can turn on a single role (and turn off the others). Doesn't touch test rules. |
-
-You can also flip individual rules manually any time, in the sidebar or via
-the command palette.
-
-## All commands
-
-Every command lives under the **AI Rules:** prefix in the command palette.
-
-### Install / update
-
-| Command | Plain English |
-|---------|---------------|
-| Install / update rules in workspace | Copies all bundled rules into `.cursor/rules/ai-rules/`. The `evolve-rules` rule starts off unless it was already on. Auto-mirrors to Cline if Cline is installed. |
-| Reset workspace rules folder to defaults… | Deletes the workspace rules folder and replaces it with the bundled defaults. Removes any extra rules you (or the AI) added. |
-| Sync bundled rules to Cline (`.clinerules/ai-rules`) | Manually mirrors the bundled `.mdc` rules into `.clinerules/ai-rules/` (the format Cline reads). |
-
-### Turn rules on or off
-
-| Command | Plain English |
-|---------|---------------|
-| Enable all rules (workspace) | Turns every bundled rule **on** in this project. |
-| Disable all rules (workspace) | Turns every bundled rule **off** in this project (renames to `.mdc.disabled`). |
-| Enable or disable a single rule… | Pops up a picker for one rule and flips it on or off. |
-| Enable every rule in this folder | (Sidebar) Turns every rule under the picked subfolder on. |
-| Disable every rule in this folder | (Sidebar) Turns every rule under the picked subfolder off. |
-
-### Modes
-
-| Command | Plain English |
-|---------|---------------|
-| Mode — Plan | Architect role on; tests off. |
-| Mode — Build | Developer role on; tests off. |
-| Mode — Test | Tester role on; all `test-rules/*` on. |
-| Mode — Role… | Pick a single role; the others get turned off. |
-
-### Global mirror (cross-project)
-
-The "global mirror" is a per-extension copy under VS Code / Cursor's global
-storage. You can populate it once and then push it into any project.
-
-| Command | Plain English |
-|---------|---------------|
-| Enable all rules (global mirror) | Refreshes the extension's global mirror from the bundle. |
-| Disable all rules (global mirror) | Removes the global mirror. |
-| Copy global mirror into workspace | Pushes the global mirror into the current project's rules folder. |
-
-### Inspect / refresh
-
-| Command | Plain English |
-|---------|---------------|
-| Show pack status (green = active) | Opens the **Output → AI Rules** channel and lists every rule (green = on, dim = off). |
-| Refresh sidebar | Re-reads the rules folder from disk and redraws the sidebar tree. |
-| Open rule file | Opens a specific `.mdc` in the editor (used by the sidebar tree). |
-
-## Settings
-
-| Setting | Default | Effect |
-|---------|---------|--------|
-| `aiRules.promptInstallOnUpdate` | `true` | When the extension version changes, ask whether to refresh workspace rules from the bundled copy. |
-| `aiRules.autoSyncClineWhenInstalled` | `true` | If Cline is installed, also mirror bundled `.mdc` rules into `.clinerules/ai-rules/` whenever rules change. |
 
 ## Limitations — read this before you blame the rules
 

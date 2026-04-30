@@ -6,6 +6,26 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-04-29
+
+### Added
+
+- **Auto-install on first open.** When the extension activates in a workspace
+  that does not yet have `.cursor/rules/ai-rules/`, it now drops the bundled
+  rule pack into the workspace automatically (and mirrors to Cline if
+  applicable). Existing rules folders are never overwritten — use the
+  explicit **Install / update** or **Reset** commands for that. Re-runs on
+  `onDidChangeWorkspaceFolders` so newly added folders pick up the pack.
+- New setting `aiRules.autoInstallOnOpenWorkspace` (default `true`) to opt
+  out of the auto-install.
+
+### Changed
+
+- **README reorder**: `## All commands`, `## Modes`, and `## Settings` now
+  appear above `## Every rule that ships with this extension`, so a new user
+  sees how to operate the extension before scrolling through the per-rule
+  table. Quickstart updated to describe the new auto-install behavior.
+
 ## [0.2.0] - 2026-04-29
 
 First Marketplace release.
