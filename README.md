@@ -2,7 +2,7 @@
 
 **Display name:** AI Rules · **Package id:** `wyvernsystems.wyvern-ai-rules` (see `package.json`).
 
-Installs Wyvern’s Cursor project rules into **`.cursor/rules/ai-rules/`** (same layout as this repo under `.cursor/rules/ai-rules/`). Rules are shipped from **`bundled/ai-rules/`**, produced from that folder by `npm run sync-bundled`.
+Installs Wyvern’s Cursor project rules into **`.cursor/rules/ai-rules/`**, organized into three subfolders—**`coding-rules/`**, **`documentation-rules/`**, **`rules-for-rules/`**—matching this repository’s `.cursor/rules/ai-rules/` source. Rules are shipped from **`bundled/ai-rules/`**, produced from that folder by `npm run sync-bundled`.
 
 When **Cline** is installed (`saoudrizwan.claude-dev` or `saoudrizwan.cline-nightly`) and **`aiRules.autoSyncClineWhenInstalled`** is enabled (default **on**), the extension also mirrors bundled `.mdc` files into **`.clinerules/ai-rules/`** as `ai-rules-*.md` after workspace install, reset, copy-from-global, and when Cline is first detected.
 

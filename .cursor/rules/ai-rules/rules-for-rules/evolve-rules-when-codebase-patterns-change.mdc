@@ -22,5 +22,5 @@ Trigger this when **writing or reviewing code**, not only when editing rule file
 - Pull examples from real repo code.
 - Cross-link related rules instead of duplicating paragraphs.
 
-For **how** to author rule files, see [write-cursor-rules-for-this-project.mdc](mdc:.cursor/rules/ai-rules/write-cursor-rules-for-this-project.mdc).
-For **deprecation, quality, and doc sync**, see [maintain-cursor-rules.mdc](mdc:.cursor/rules/ai-rules/maintain-cursor-rules.mdc).
+For **how** to author rule files, see [write-cursor-rules-for-this-project.mdc](mdc:.cursor/rules/ai-rules/rules-for-rules/write-cursor-rules-for-this-project.mdc).
+For **deprecation, quality, and doc sync**, see [maintain-cursor-rules.mdc](mdc:.cursor/rules/ai-rules/rules-for-rules/maintain-cursor-rules.mdc).

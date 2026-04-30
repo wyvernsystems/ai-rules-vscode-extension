@@ -14,5 +14,31 @@ All notable changes to this project are documented here. The format follows
   (~24% smaller) without dropping intent.
 - `state-active-project-rules.mdc` now includes a verbatim copy-paste template
   for the **`### Active project rules`** section so models comply more reliably.
-- Mirrored updated rules into `bundled/ai-rules/` via `npm run sync-bundled` and
-  confirmed with `npm run verify:bundled`.
+- Reorganized the rule pack into three subfolders inside
+  `.cursor/rules/ai-rules/`:
+  - `coding-rules/` — write/reuse/organize/secure/LTS/verify/dead-code rules.
+  - `documentation-rules/` — changelog, requirements, markdown formatting.
+  - `rules-for-rules/` — meta rules that govern how the pack itself is authored
+    and announced.
+- Updated `mdc:` cross-links and the `state-active-project-rules.mdc` template
+  to use the new subfolder paths so the rendered "Active project rules" block
+  reflects the layout on disk.
+
+### Fixed
+
+- `scripts/sync-bundled.mjs` now walks recursively when generating
+  `bundled/manifest.json`, so manifest paths include subfolders (e.g.
+  `coding-rules/write-clean-code.mdc`).
+- `src/rulesOperations.ts`:
+  - `installBundleToRulesDir` and `setRuleEnabled` create parent directories
+    before copying or renaming, so subfolder rules install and toggle
+    correctly.
+  - `deleteUnshippedFiles` walks the rules directory recursively when checking
+    which files are part of the bundle.
+  - The Cline mirror writer flattens any subfolder path into the output
+    filename (`ai-rules-coding-rules-write-clean-code.md`) to avoid collisions
+    and keep `.clinerules/ai-rules/` flat.
+  - `EVOLVE_RULE` now points at `rules-for-rules/evolve-rules-when-codebase-patterns-change.mdc`.
+- `src/extension.ts` "Copy global mirror into workspace" creates parent
+  directories before each `copyFile`.
+- `ABOUT_RULES.md` and `README.md` updated to describe the new layout.

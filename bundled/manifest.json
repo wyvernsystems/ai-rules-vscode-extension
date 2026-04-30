@@ -2,19 +2,19 @@
   "version": 1,
   "files": [
     "ABOUT_RULES.md",
-    "append-and-deduplicate-requirements.mdc",
-    "evolve-rules-when-codebase-patterns-change.mdc",
-    "maintain-cursor-rules.mdc",
-    "organize-repository-by-feature.mdc",
-    "prefer-lts-stable-runtimes-and-libraries.mdc",
-    "remove-dead-code-and-unused-files.mdc",
-    "reuse-code-before-duplicating.mdc",
-    "secure-code-data-and-dependencies.mdc",
-    "state-active-project-rules.mdc",
-    "update-changelog-for-notable-changes.mdc",
-    "use-this-format-for-markdown-files.mdc",
-    "verify-syntax-and-fix-before-finishing.mdc",
-    "write-clean-code.mdc",
-    "write-cursor-rules-for-this-project.mdc"
+    "coding-rules/organize-repository-by-feature.mdc",
+    "coding-rules/prefer-lts-stable-runtimes-and-libraries.mdc",
+    "coding-rules/remove-dead-code-and-unused-files.mdc",
+    "coding-rules/reuse-code-before-duplicating.mdc",
+    "coding-rules/secure-code-data-and-dependencies.mdc",
+    "coding-rules/verify-syntax-and-fix-before-finishing.mdc",
+    "coding-rules/write-clean-code.mdc",
+    "documentation-rules/append-and-deduplicate-requirements.mdc",
+    "documentation-rules/update-changelog-for-notable-changes.mdc",
+    "documentation-rules/use-this-format-for-markdown-files.mdc",
+    "rules-for-rules/evolve-rules-when-codebase-patterns-change.mdc",
+    "rules-for-rules/maintain-cursor-rules.mdc",
+    "rules-for-rules/state-active-project-rules.mdc",
+    "rules-for-rules/write-cursor-rules-for-this-project.mdc"
   ]
 }

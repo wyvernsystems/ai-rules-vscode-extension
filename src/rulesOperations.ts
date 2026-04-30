@@ -3,7 +3,11 @@ import * as path from "node:path";
 import type { BundleManifest } from "./manifest";
 
 export const RULES_SUBDIR = "ai-rules";
-export const EVOLVE_RULE = "evolve-rules-when-codebase-patterns-change.mdc";
+/**
+ * Manifest paths use forward slashes; `path.join` normalizes them per platform
+ * when we touch disk, so we keep slashes in the constant for stable comparisons.
+ */
+export const EVOLVE_RULE = "rules-for-rules/evolve-rules-when-codebase-patterns-change.mdc";
 
 /** Cursor ignores `*.mdc.disabled`; toggling = rename. */
 export function disabledName(ruleFile: string): string {
@@ -44,6 +48,7 @@ export async function setRuleEnabled(rulesDir: string, ruleFile: string, enabled
       if (await pathExists(active)) {
         await fs.rm(dis, { force: true });
       } else {
+        await fs.mkdir(path.dirname(active), { recursive: true });
         await fs.rename(dis, active);
       }
     }
@@ -53,6 +58,7 @@ export async function setRuleEnabled(rulesDir: string, ruleFile: string, enabled
     if (await pathExists(dis)) {
       await fs.rm(dis, { force: true });
     }
+    await fs.mkdir(path.dirname(dis), { recursive: true });
     await fs.rename(active, dis);
   }
 }
@@ -86,6 +92,7 @@ export async function installBundleToRulesDir(
   for (const f of manifest.files) {
     const src = path.join(bundleDir, f);
     const dest = path.join(rulesDir, f);
+    await fs.mkdir(path.dirname(dest), { recursive: true });
     await fs.copyFile(src, dest);
   }
   if (options.applyEvolveOffUnlessWasEnabled) {
@@ -106,33 +113,61 @@ function stripDisabledSuffix(filename: string): string {
   return filename;
 }
 
-function isShippedRuleFile(name: string, manifest: BundleManifest): boolean {
-  if (manifest.files.includes(name)) {
+function isShippedRuleFile(relPath: string, manifest: BundleManifest): boolean {
+  if (manifest.files.includes(relPath)) {
     return true;
   }
-  const stripped = stripDisabledSuffix(name);
-  if (stripped !== name && manifest.files.includes(stripped)) {
+  const stripped = stripDisabledSuffix(relPath);
+  if (stripped !== relPath && manifest.files.includes(stripped)) {
     return true;
   }
   return false;
 }
 
 /**
+ * Walks `rulesDir` recursively and returns repo-relative paths using forward
+ * slashes—matches the manifest format so comparisons are platform-independent.
+ */
+async function listRuleFilesRecursive(rulesDir: string): Promise<string[]> {
+  const out: string[] = [];
+  const walk = async (relDir: string): Promise<void> => {
+    const abs = path.join(rulesDir, relDir);
+    let entries;
+    try {
+      entries = await fs.readdir(abs, { withFileTypes: true });
+    } catch {
+      return;
+    }
+    for (const ent of entries) {
+      if (ent.name.startsWith(".")) {
+        continue;
+      }
+      const rel = relDir ? `${relDir}/${ent.name}` : ent.name;
+      if (ent.isDirectory()) {
+        await walk(rel);
+      } else {
+        out.push(rel);
+      }
+    }
+  };
+  await walk("");
+  return out;
+}
+
+/**
  * Remove files in the rules folder that are not part of the bundle (including evolved one-off rules).
+ * Walks recursively so subfolder entries are checked against manifest paths.
  */
 export async function deleteUnshippedFiles(rulesDir: string, manifest: BundleManifest): Promise<void> {
   if (!(await pathExists(rulesDir))) {
     return;
   }
-  const entries = await fs.readdir(rulesDir);
-  for (const name of entries) {
-    if (name.startsWith(".")) {
+  const all = await listRuleFilesRecursive(rulesDir);
+  for (const rel of all) {
+    if (isShippedRuleFile(rel, manifest)) {
       continue;
     }
-    if (isShippedRuleFile(name, manifest)) {
-      continue;
-    }
-    await fs.rm(path.join(rulesDir, name), { recursive: true, force: true });
+    await fs.rm(path.join(rulesDir, rel), { force: true });
   }
 }
 
@@ -148,6 +183,16 @@ export async function resetRulesDirToBundle(
   await deleteUnshippedFiles(rulesDir, manifest);
 }
 
+/**
+ * Cline reads flat Markdown files from `.clinerules/<subdir>/`, so we collapse
+ * any subfolders in the manifest path into the filename to avoid collisions.
+ */
+function clineMirrorName(manifestPath: string): string {
+  const withoutExt = manifestPath.replace(/\.mdc$/i, "");
+  const flattened = withoutExt.replace(/\//g, "-");
+  return `ai-rules-${flattened}.md`;
+}
+
 export async function syncBundledMdcsToClinerules(
   workspaceRoot: string,
   bundleDir: string,
@@ -158,7 +203,6 @@ export async function syncBundledMdcsToClinerules(
   const mdcs = manifest.files.filter((f) => f.endsWith(".mdc"));
   for (const mdc of mdcs) {
     const body = await fs.readFile(path.join(bundleDir, mdc), "utf8");
-    const outName = `ai-rules-${mdc.replace(/\.mdc$/i, "")}.md`;
-    await fs.writeFile(path.join(dest, outName), body, "utf8");
+    await fs.writeFile(path.join(dest, clineMirrorName(mdc)), body, "utf8");
   }
 }

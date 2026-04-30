@@ -163,7 +163,9 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     await fs.mkdir(rulesDir, { recursive: true });
     const evolveWas = await wasEvolveEnabledBeforeCopy(rulesDir);
     for (const f of manifest.files) {
-      await fs.copyFile(path.join(globalDir, f), path.join(rulesDir, f));
+      const dest = path.join(rulesDir, f);
+      await fs.mkdir(path.dirname(dest), { recursive: true });
+      await fs.copyFile(path.join(globalDir, f), dest);
     }
     await applyEvolveDefaultOff(rulesDir, evolveWas);
     const clineSynced = await maybeAutoSyncCline(root);

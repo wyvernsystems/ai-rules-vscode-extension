@@ -6,7 +6,7 @@ alwaysApply: false
 
 # Maintain and update Cursor rules
 
-Applies when changing files under `.cursor/rules/ai-rules/`. For format and placement, see [write-cursor-rules-for-this-project.mdc](mdc:.cursor/rules/ai-rules/write-cursor-rules-for-this-project.mdc).
+Applies when changing files under `.cursor/rules/ai-rules/`. For format and placement, see [write-cursor-rules-for-this-project.mdc](mdc:.cursor/rules/ai-rules/rules-for-rules/write-cursor-rules-for-this-project.mdc).
 
 ## Add a new rule when
 
