@@ -45,7 +45,7 @@ details belong in the code or in the rule files.
 
 - **License**: MIT. A `LICENSE` file ships in the VSIX.
 - **Publisher**: `wyvernsystems`. Marketplace package id
-  `wyvernsystems.wyvern-ai-rules`.
+  `wyvernsystems.ai-rules`.
 - **Engines**: VS Code `^1.85.0`, Node `>=18.18.0`.
 - **No runtime dependencies.** Only `@types/*`, `@vscode/vsce`, and
   `typescript` as devDependencies.

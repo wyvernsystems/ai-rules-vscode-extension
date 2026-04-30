@@ -6,7 +6,7 @@ keep docs current, frame answers for the right audience, and write proper
 tests when you ask for them.
 
 - **Display name:** AI Rules
-- **Package id:** `wyvernsystems.wyvern-ai-rules`
+- **Package id:** `wyvernsystems.ai-rules`
 - **License:** MIT
 - **Source of truth for rules:** [`.cursor/rules/ai-rules/`](./.cursor/rules/ai-rules/)
   (the VSIX ships a byte-identical copy under [`bundled/ai-rules/`](./bundled/ai-rules/))
@@ -277,7 +277,7 @@ npm run compile
 npx --no-install vsce package
 ```
 
-This produces `wyvern-ai-rules-<version>.vsix` in the repo root. To upload it
+This produces `ai-rules-<version>.vsix` in the repo root. To upload it
 to the [VS Code Marketplace](https://marketplace.visualstudio.com/manage):
 
 1. Sign in as the publisher (`wyvernsystems`).

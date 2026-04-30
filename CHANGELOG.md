@@ -10,6 +10,14 @@ All notable changes to this project are documented here. The format follows
 
 First Marketplace release.
 
+### Renamed
+
+- **Package name**: `wyvern-ai-rules` → `ai-rules`. The Marketplace
+  package id is now `wyvernsystems.ai-rules` (publisher unchanged), and
+  `vsce package` produces `ai-rules-<version>.vsix` (e.g.
+  `ai-rules-0.2.0.vsix`) instead of `wyvern-ai-rules-<version>.vsix`. No
+  prior public release used the old id.
+
 ### Added
 
 - **Plain-English README** that doubles as the Marketplace description: an
