@@ -20,5 +20,12 @@ Cursor **project rules** are Markdown files with optional YAML **frontmatter**, 
 | `secure-code-data-and-dependencies.mdc` | **Always** (`alwaysApply: true`). | It reinforces secure defaults for secrets, input handling, authorization, crypto, dependencies, and logging without leaking sensitive data. |
 | `prefer-lts-stable-runtimes-and-libraries.mdc` | **Always** (`alwaysApply: true`). | It steers toolchains and libraries toward LTS or current stable releases, sensible pinning, and timely security patches. |
 | `use-this-format-for-markdown-files.mdc` | **Glob only**: when open or relevant files match `**/*.{md,mdx}`. Also when **@‑mentioned**. | It standardizes Markdown structure, lists, code samples, links, and README sections when working in `.md` or `.mdx` files. |
+| `update-changelog-for-notable-changes.mdc` | **Always** (`alwaysApply: true`). | Prompts updates to `CHANGELOG.md` for user-visible or release-worthy changes using a sensible Keep-a-Changelog style. |
+| `append-and-deduplicate-requirements.mdc` | **Always** (`alwaysApply: true`). | Adds stated requirements to `REQUIREMENTS.md` (or `docs/REQUIREMENTS.md`), merges near-duplicates, and keeps the list consolidated. |
+| `verify-syntax-and-fix-before-finishing.mdc` | **Always** (`alwaysApply: true`). | Before finishing coding work, re-checks touched files for syntax/type issues and fixes problems the agent can address. |
 
 For VS Code UI settings bundled with this workspace, see **`.vscode/settings.json`** at the repo root (that file is not a Cursor rule).
+
+## Extension vs repo (AI Rules VSIX)
+
+The **AI Rules** extension ships a copy under **`bundled/ai-rules/`**. The **source of truth** for this repository is **`.cursor/rules/ai-rules/`**. After editing rules here, run `npm run sync-bundled` (and `npm run verify:bundled` to confirm they match) before packaging the extension.

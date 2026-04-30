@@ -29,6 +29,9 @@ Suggested layout:
     ├── secure-code-data-and-dependencies.mdc
     ├── prefer-lts-stable-runtimes-and-libraries.mdc
     ├── use-this-format-for-markdown-files.mdc
+    ├── update-changelog-for-notable-changes.mdc
+    ├── append-and-deduplicate-requirements.mdc
+    ├── verify-syntax-and-fix-before-finishing.mdc
     └── domain-specific-thing.mdc
 ```
 

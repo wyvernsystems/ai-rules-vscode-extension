@@ -1,0 +1,24 @@
+---
+description: Re-check edited code for syntax and type issues; fix before handing work back
+alwaysApply: true
+---
+
+# Verify syntax and fix before finishing
+
+Before you treat a coding task as **done** (especially after edits, new files, or refactors), **double-check** for syntax and static issues in the files you touched.
+
+## What to do
+
+1. **Re-read** the changed regions for mismatched brackets, quotes, JSX/HTML tags, imports, and obvious typos.
+2. **Run or consult** the project’s normal quality signals when available: build, `tsc`/typecheck, formatter/linter, or IDE diagnostics—use the same tools the repo already uses in `package.json` / CI / docs.
+3. **Fix** issues you introduced or that block correctness; do not leave known syntax/type errors in delivered code.
+4. If a reported error is **pre-existing** and outside your change, say so briefly and avoid widening scope unless the user asked.
+
+## When tools are unavailable
+
+- Still do a careful pass on structure (balanced delimiters, valid imports, plausible API usage) before concluding.
+
+## Do not
+
+- Silence linters with blanket disables without a narrow reason and user alignment.
+- Claim “no errors” without having checked at least the edited files when checks are available.

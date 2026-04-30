@@ -22,9 +22,12 @@ When **Cline** is installed (`saoudrizwan.claude-dev` or `saoudrizwan.cline-nigh
 
 ```bash
 npm install
-npm run sync-bundled
+npm run sync-bundled   # copy .cursor/rules/ai-rules → bundled/ai-rules
+npm run verify:bundled # fail if bundled ≠ source (run after sync)
 npm run compile
 ```
+
+**Source of truth** for rule text is **`.cursor/rules/ai-rules/`**. The VSIX ships **`bundled/ai-rules/`**; `vscode:prepublish` runs **sync → verify → compile** so they stay identical.
 
 Press **F5** with this repo open to run the Extension Development Host.
 
@@ -39,3 +42,9 @@ npx vsce package
 
 - Cursor **user rules** (app-wide) still live in Cursor Settings → Rules; this extension’s “global mirror” is separate storage unless you copy it into a workspace.
 - Cline may interpret YAML (`globs` vs `paths`) differently from Cursor; treat Cline output as best-effort.
+
+### If “Active project rules” never appears in chat
+
+- Confirm **`state-active-project-rules.mdc`** is not disabled: the AI Rules extension may have renamed it to **`.mdc.disabled`**—use **AI Rules: Enable all rules (workspace)** or toggle that rule on.
+- In **Cursor Settings → Rules**, ensure project rules for this workspace are not turned off.
+- Cursor still depends on the **model** following instructions; if it skips the block, try **`@state-active-project-rules`** once in the thread.

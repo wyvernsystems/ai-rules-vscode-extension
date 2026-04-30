@@ -88,9 +88,10 @@
   },
   "scripts": {
     "sync-bundled": "node scripts/sync-bundled.mjs",
+    "verify:bundled": "node scripts/verify-bundled.mjs",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
-    "vscode:prepublish": "npm run sync-bundled && npm run compile",
+    "vscode:prepublish": "npm run sync-bundled && npm run verify:bundled && npm run compile",
     "package": "vsce package"
   },
   "devDependencies": {

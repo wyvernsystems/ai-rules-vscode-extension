@@ -1,20 +1,46 @@
 ---
-description: Tell the user which project rules apply at the start of a new chat or agent run
+description: REQUIRED — first substantive reply must include ### Active project rules so the user sees which pack rules apply
 alwaysApply: true
 ---
 
 # State which project rules apply when a chat begins
 
-Cursor loads project rules from `.cursor/rules/` (here: `.cursor/rules/ai-rules/*.mdc`). Each rule’s frontmatter sets **when** it applies (`alwaysApply: true`, or `globs` when matching files are in context, or when the user @-mentions a rule).
+Cursor injects project rules from **`.cursor/rules/ai-rules/*.mdc`**. This file is **`alwaysApply: true`**, so it should be in context whenever that pack is installed and not renamed to **`.mdc.disabled`**.
 
-## What to tell the user
+## Non-negotiable (user-visible)
 
-- **When**: At the **first** assistant reply in a **new** chat thread after the user’s opening message, and again when the user **starts a new Agent run** (fresh invocation) or clearly begins an unrelated task in a way that feels like a new run—**do not** repeat the full list on every follow-up message in the same thread unless the user asks or open files change which glob-scoped rules plausibly apply.
-- **What**: A short section titled **Active project rules** (or similar). For each relevant rule, give the **`.mdc` filename** plus **one phrase** (from its `description` or purpose).
-- **How to decide “relevant”**:
-  - Always list rules you know have **`alwaysApply: true`** in this folder (they are in context).
-  - List **glob-scoped** rules when the user’s open files, attached paths, or stated task clearly match that rule’s `globs` (e.g. `*.md` → markdown rule).
-  - List rules the user **@-mentioned** in the prompt.
-  - If you are unsure which glob rules fired, say so briefly; still list always-applied and @-mentioned rules.
+For the **first assistant message in this chat** that responds to the user’s prompt (not a hidden tool-only step), you **must** put the following **at the very top** of the markdown you show the user—before explanations, plans, or code. You may use **one short sentence** (≤ 20 words) before it only if you are acknowledging the request.
 
-Keep the block **compact** (bullets or a tiny table), not a copy of full rule bodies.
+Use this **exact** heading (three hashes, exact spelling):
+
+### Active project rules
+
+Immediately under that heading, add a **compact bullet list**. Each bullet must be:
+
+`- **`filename.mdc`** — one short phrase (from its `description` or obvious purpose).`
+
+**Minimum rows** (skip a row only if that rule is clearly disabled, e.g. only `*.mdc.disabled` exists and no active `.mdc`):
+
+- `state-active-project-rules.mdc`
+- `write-clean-code.mdc`
+- `reuse-code-before-duplicating.mdc`
+- `organize-repository-by-feature.mdc`
+- `secure-code-data-and-dependencies.mdc`
+- `prefer-lts-stable-runtimes-and-libraries.mdc`
+- `update-changelog-for-notable-changes.mdc`
+- `append-and-deduplicate-requirements.mdc`
+- `verify-syntax-and-fix-before-finishing.mdc`
+
+Also list **`evolve-rules-when-codebase-patterns-change.mdc`** only if it is active (not stored as `.mdc.disabled`).
+
+Add **glob-scoped** rules from this folder when the user’s open files, attachments, or task clearly match their `globs` (e.g. Markdown work → `use-this-format-for-markdown-files.mdc`; editing rules under `ai-rules` → `write-cursor-rules-for-this-project.mdc`, `maintain-cursor-rules.mdc`).
+
+Add any rule the user **@-mentioned**.
+
+If you are unsure which glob rules apply, say so in **one** short line after the list—do not skip the list.
+
+## Later messages in the same chat
+
+Do **not** repeat the full block on every back-and-forth. Repeat it when the user starts a **clearly new** topic, a **new Agent/Composer run**, or asks what rules apply.
+
+Keep the list **short**—filenames and phrases only, not full rule bodies.

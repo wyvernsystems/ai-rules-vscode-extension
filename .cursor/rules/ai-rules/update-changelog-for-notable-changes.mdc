@@ -1,0 +1,22 @@
+---
+description: Keep CHANGELOG.md current when behavior, APIs, or UX change
+alwaysApply: true
+---
+
+# Update CHANGELOG for notable changes
+
+When you ship or describe **user-visible** or **release-worthy** changes (features, fixes, breaking changes, deprecations, security-relevant behavior), update **`CHANGELOG.md`** at the repo root (create it if missing and the project uses a changelog).
+
+## What to log
+
+- **Added** / **Changed** / **Fixed** / **Removed** / **Security** — use [Keep a Changelog](https://keepachangelog.com/) style headings when the file already follows that shape.
+- Prefer an **`[Unreleased]`** section at the top for work not yet tagged; move bullets to a dated section when the user cuts a release.
+- One line per bullet; link issues/PRs if the repo already does.
+
+## What not to log
+
+- Internal refactors with no outward effect, typo-only edits in comments, or dependency bumps unless they change behavior or supported versions (then mention briefly).
+
+## If CHANGELOG.md does not exist
+
+- Ask once whether to create one, or create a minimal file with `# Changelog` and `## [Unreleased]` if the user’s workflow clearly expects it.

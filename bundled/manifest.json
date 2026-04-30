@@ -2,6 +2,7 @@
   "version": 1,
   "files": [
     "ABOUT_RULES.md",
+    "append-and-deduplicate-requirements.mdc",
     "evolve-rules-when-codebase-patterns-change.mdc",
     "maintain-cursor-rules.mdc",
     "organize-repository-by-feature.mdc",
@@ -9,7 +10,9 @@
     "reuse-code-before-duplicating.mdc",
     "secure-code-data-and-dependencies.mdc",
     "state-active-project-rules.mdc",
+    "update-changelog-for-notable-changes.mdc",
     "use-this-format-for-markdown-files.mdc",
+    "verify-syntax-and-fix-before-finishing.mdc",
     "write-clean-code.mdc",
     "write-cursor-rules-for-this-project.mdc"
   ]
