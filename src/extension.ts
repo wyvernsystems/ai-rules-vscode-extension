@@ -3,6 +3,13 @@ import * as path from "node:path";
 import * as vscode from "vscode";
 import { isClineInstalled } from "./cline";
 import { listBundledMdcs, readBundleManifest } from "./manifest";
+import {
+  applyModeProfile,
+  applyRolePick,
+  MODE_PROFILES,
+  ROLE_RULES,
+  type Mode,
+} from "./modes";
 import { createAiRulesOutputChannel, quickPickIconsForRule, showPackStatusInOutput } from "./ruleStatusUi";
 import {
   applyEvolveDefaultOff,
@@ -215,6 +222,54 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     await setRuleEnabled(rulesDir, picked.ruleFile, !on);
     vscode.window.showInformationMessage(
       `AI Rules: ${picked.ruleFile} is now ${!on ? "enabled" : "disabled"}.`
+    );
+    await showPackStatusInOutput(rulesOutput, rulesDir, mdcs);
+  });
+
+  const applyMode = async (mode: Mode): Promise<void> => {
+    const root = ensureWorkspace();
+    const rulesDir = workspaceRulesDir(root);
+    const profile = MODE_PROFILES[mode];
+    await applyModeProfile(rulesDir, profile);
+    const clineSynced = await maybeAutoSyncCline(root);
+    vscode.window.showInformationMessage(
+      `AI Rules: ${profile.summary}` + (clineSynced ? " Cline mirror updated." : "")
+    );
+    await showPackStatusInOutput(rulesOutput, rulesDir, mdcs);
+  };
+
+  register("aiRules.modePlan", () => applyMode("plan"));
+  register("aiRules.modeBuild", () => applyMode("build"));
+  register("aiRules.modeTest", () => applyMode("test"));
+
+  register("aiRules.modeRole", async () => {
+    const root = ensureWorkspace();
+    const rulesDir = workspaceRulesDir(root);
+    type RolePick = vscode.QuickPickItem & { ruleFile: string };
+    const items: RolePick[] = [];
+    for (const ruleFile of ROLE_RULES) {
+      const on = await isRuleEnabled(rulesDir, ruleFile);
+      const label = ruleFile.replace(/^role-rules\//, "").replace(/\.mdc$/, "");
+      items.push({
+        label,
+        description: on ? "Currently active" : "",
+        detail: ruleFile,
+        iconPath: quickPickIconsForRule(on),
+        ruleFile,
+      });
+    }
+    const picked = await vscode.window.showQuickPick(items, {
+      title: "AI Rules — pick a single role (others get disabled)",
+      placeHolder: "Select the role to frame the assistant's responses",
+    });
+    if (!picked) {
+      return;
+    }
+    await applyRolePick(rulesDir, picked.ruleFile);
+    const clineSynced = await maybeAutoSyncCline(root);
+    vscode.window.showInformationMessage(
+      `AI Rules: role mode — only ${picked.label} is enabled.` +
+        (clineSynced ? " Cline mirror updated." : "")
     );
     await showPackStatusInOutput(rulesOutput, rulesDir, mdcs);
   });

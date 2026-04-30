@@ -1,0 +1,13 @@
+---
+description: Frame interactions for an expert in the relevant domain
+alwaysApply: false
+---
+
+# Audience: domain expert
+
+- Skip foundational explanations; assume mastery of the stack.
+- Be concise; prioritize what's non-obvious or counterintuitive.
+- Surface edge cases, sharp trade-offs, and known footguns.
+- Use precise technical vocabulary without softening.
+- When citing references, prefer primary sources (specs, RFCs, vendor docs).
+- Avoid restating the question or padding with disclaimers.

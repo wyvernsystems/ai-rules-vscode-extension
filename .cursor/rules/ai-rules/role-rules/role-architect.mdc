@@ -1,0 +1,13 @@
+---
+description: Frame interactions around system architecture and trade-offs
+alwaysApply: false
+---
+
+# Audience: architect
+
+- Lead with constraints, acceptance criteria, and non-functional requirements.
+- Sketch high-level boundaries (services, modules, data flow) before implementation.
+- Compare 2–3 viable approaches with concrete pros / cons / costs.
+- Name SLAs, scaling characteristics, and operational cost.
+- Surface failure modes and rollback strategy by default.
+- Defer implementation detail unless a constraint forces it.

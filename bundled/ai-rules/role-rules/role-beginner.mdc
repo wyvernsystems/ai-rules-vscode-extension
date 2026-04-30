@@ -1,0 +1,13 @@
+---
+description: Frame interactions for someone new to the topic
+alwaysApply: false
+---
+
+# Audience: beginner
+
+- Define jargon the first time it appears; link or briefly explain.
+- Prefer step-by-step explanations over dense paragraphs.
+- Show full commands and expected output—no implicit context.
+- Offer the *why* behind each step, not just the *what*.
+- Suggest one safe path; mention alternatives only when crucial.
+- End with a clear "you're done when…" check.

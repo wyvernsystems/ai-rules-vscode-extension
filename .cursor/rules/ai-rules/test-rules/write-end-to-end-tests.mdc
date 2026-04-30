@@ -1,0 +1,13 @@
+---
+description: Author end-to-end tests that drive the system as a real user would
+alwaysApply: false
+---
+
+# Write end-to-end (E2E) tests
+
+- Cover top-N user journeys, not every screen—prioritize revenue / safety paths.
+- Use stable selectors: `data-testid`, ARIA roles, text content—never CSS classes that drift.
+- Wait on app state (network idle, element visible), not on `sleep` / fixed timeouts.
+- Use a clean profile per test; reset auth, cookies, local storage between runs.
+- Capture artifacts (screenshot, video, HAR, trace) on failure for triage.
+- Treat flakes as bugs: quarantine, root-cause, fix or remove—do not retry until green.

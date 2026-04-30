@@ -6,6 +6,29 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- **Role rules** (`.cursor/rules/ai-rules/role-rules/`)—8 audience-framing rules,
+  off by default, toggled by the new mode commands:
+  - `role-developer.mdc`, `role-architect.mdc`, `role-tester.mdc`,
+    `role-cyber-expert.mdc`, `role-product-manager.mdc`, `role-beginner.mdc`,
+    `role-expert.mdc`, `role-end-user.mdc`.
+- **Test rules** (`.cursor/rules/ai-rules/test-rules/`)—5 testing playbooks,
+  off by default, enabled together by `Mode — Test`:
+  - `write-unit-tests.mdc`, `write-smoke-tests.mdc`,
+    `write-regression-tests.mdc`, `write-integration-tests.mdc`,
+    `write-end-to-end-tests.mdc`.
+- **Mode commands** (the AI Rules VS Code extension):
+  - `AI Rules: Mode — Plan` (architect role, no test rules)
+  - `AI Rules: Mode — Build` (developer role, no test rules)
+  - `AI Rules: Mode — Test` (tester role + every test rule)
+  - `AI Rules: Mode — Role…` (QuickPick: enable one role, disable the others)
+- New module `src/modes.ts` defining the mode preset shape and helpers
+  (`applyModeProfile`, `applyRolePick`, `MODE_PROFILES`, `ROLE_RULES`,
+  `TEST_RULES`).
+- `state-active-project-rules.mdc` now lists role and test rules as add-on rows
+  the assistant should print when those rules are actually injected.
+
 ### Changed
 
 - Rewrote every rule under `.cursor/rules/ai-rules/` for clarity and lower token

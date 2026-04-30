@@ -73,6 +73,26 @@
         "command": "aiRules.resetWorkspaceRulesToDefaults",
         "title": "AI Rules: Reset workspace rules folder to defaults…",
         "category": "AI Rules"
+      },
+      {
+        "command": "aiRules.modePlan",
+        "title": "AI Rules: Mode — Plan (architect role, no test rules)",
+        "category": "AI Rules"
+      },
+      {
+        "command": "aiRules.modeBuild",
+        "title": "AI Rules: Mode — Build (developer role, no test rules)",
+        "category": "AI Rules"
+      },
+      {
+        "command": "aiRules.modeTest",
+        "title": "AI Rules: Mode — Test (tester role + all test rules)",
+        "category": "AI Rules"
+      },
+      {
+        "command": "aiRules.modeRole",
+        "title": "AI Rules: Mode — Role… (pick a single role to frame replies)",
+        "category": "AI Rules"
       }
     ],
     "configuration": {
