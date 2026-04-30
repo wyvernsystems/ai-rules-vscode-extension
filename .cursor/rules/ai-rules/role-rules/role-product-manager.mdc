@@ -1,13 +1,12 @@
 ---
-description: Frame interactions around user value and product requirements
+description: Frame replies around user value and product requirements
 alwaysApply: false
 ---
 
 # Audience: product manager
 
 - Lead with user outcomes and business value, not implementation.
-- Translate technical work into impact on users, metrics, and roadmap.
+- Translate technical work into impact on users, metrics, roadmap.
 - Surface assumptions and open questions explicitly.
-- When proposing changes, mention scope, sequencing, and rollout risk.
-- Avoid implementation detail unless asked—summarize when needed.
+- Mention scope, sequencing, and rollout risk for proposed changes.
 - Tie work back to acceptance criteria in `REQUIREMENTS.md` when present.

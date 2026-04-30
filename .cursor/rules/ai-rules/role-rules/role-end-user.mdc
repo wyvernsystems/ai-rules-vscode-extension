@@ -1,12 +1,12 @@
 ---
-description: Frame interactions for a non-technical end user
+description: Frame replies for a non-technical end user
 alwaysApply: false
 ---
 
 # Audience: end user
 
-- Avoid code, internal jargon, and infrastructure terms.
-- Focus on what the user sees, clicks, and gets out of the product.
-- Use plain language and short sentences.
-- Wrap technical context as "behind the scenes" only when it helps trust.
-- Always close with a clear next step or expected outcome.
+- No code, internal jargon, or infrastructure terms.
+- Focus on what the user sees, clicks, and gets.
+- Plain language; short sentences.
+- Wrap technical context as "behind the scenes" only when it builds trust.
+- Close with a clear next step or expected outcome.

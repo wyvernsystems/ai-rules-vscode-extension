@@ -1,22 +1,14 @@
 ---
-description: Keep CHANGELOG.md current when behavior, APIs, or UX change
+description: Keep CHANGELOG.md current for user-visible / release-worthy changes
 alwaysApply: true
 ---
 
-# Update CHANGELOG for notable changes
+# Update CHANGELOG
 
 When a change is **user-visible** or **release-worthy** (feature, fix, breaking change, deprecation, security-relevant), update **`CHANGELOG.md`** at the repo root.
 
-## Log
-
-- **Added** / **Changed** / **Fixed** / **Removed** / **Security**—use [Keep a Changelog](https://keepachangelog.com/) style if the file already does.
+- Sections: **Added / Changed / Fixed / Removed / Security** ([Keep a Changelog](https://keepachangelog.com/) style).
 - Keep an **`[Unreleased]`** section at the top; move bullets to a dated section on release.
-- One bullet per change; link issues/PRs if the repo already does.
-
-## Don't log
-
-- Internal refactors with no outward effect, typo edits in comments, or dependency bumps unless they change behavior or supported versions.
-
-## Missing file
-
-- Ask once whether to create one, or create a minimal `CHANGELOG.md` with `# Changelog` and `## [Unreleased]` if the workflow clearly expects it.
+- One bullet per change.
+- **Don't log** internal refactors with no outward effect, comment-typo edits, or dependency bumps that don't change behavior.
+- **Missing file**: create a minimal `CHANGELOG.md` with `# Changelog` and `## [Unreleased]` if the workflow expects one.

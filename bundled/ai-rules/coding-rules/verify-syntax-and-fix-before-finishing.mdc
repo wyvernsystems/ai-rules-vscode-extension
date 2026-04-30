@@ -1,24 +1,12 @@
 ---
-description: Re-check edited code for syntax and type issues; fix before handing work back
+description: Re-check edited code for syntax / type issues; fix before handing back
 alwaysApply: true
 ---
 
-# Verify syntax and fix before finishing
+# Verify before finishing
 
-Before declaring a coding task done, double-check the files you touched.
-
-## Do
-
-1. **Re-read** changed regions for mismatched brackets/quotes/JSX tags, bad imports, and obvious typos.
-2. **Run repo signals** when available: build, `tsc`/typecheck, formatter, linter, or IDE diagnostics—use what the repo already uses.
-3. **Fix** issues you introduced or that block correctness.
-4. If an error is **pre-existing**, say so briefly and don't widen scope unless asked.
-
-## When tools are unavailable
-
-- Pass over delimiters, imports, and plausible API usage before concluding.
-
-## Don't
-
-- Silence linters with blanket disables without a narrow reason.
-- Claim "no errors" without checking the edited files when checks exist.
+- **Re-read changed regions** for mismatched brackets / quotes / JSX tags, bad imports, typos.
+- **Run repo signals** when available: build, typecheck, formatter, linter, IDE diagnostics—use what the repo already uses.
+- **Fix issues you introduced**; flag pre-existing errors briefly without widening scope.
+- **No blanket lint disables** without a narrow reason.
+- **Don't claim "no errors"** without checking.

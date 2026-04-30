@@ -1,17 +1,16 @@
 ---
-description: Reuse existing code—search, extract, and share before duplicating
+description: Reuse existing code—search, compose, extract before duplicating
 alwaysApply: true
 ---
 
-# Reuse shared code before duplicating it
+# Reuse before duplicating
 
 - **Search first** for an existing helper, hook, service, or type before writing one.
-- **Extract on the third copy**—two snippets can coincide; three is a signal.
-- **Pick the right home**: an existing module, or `*/shared/`, `*/lib/`, `*/utils/`. Never bury shared code inside an unrelated feature.
-- **Narrow surface**: export a small, well-named function or type—not a "helpers" grab-bag.
-- **Compose** existing functions/components/hooks; pass parameters instead of forking near-duplicates.
-- **Avoid premature abstraction**: if cases will likely diverge, keep them separate; revisit at the third caller.
-- **Update call sites** when you extract—don't leave stale copies that drift.
+- **Extract on the third copy.** Two snippets can coincide; three is a signal.
+- **Pick the right home**: existing module, or `*/shared/`, `*/lib/`, `*/utils/`. Never bury shared code inside an unrelated feature.
+- **Narrow surface**: small, well-named exports—not a "helpers" grab-bag.
+- **Compose** existing code; pass parameters instead of forking near-duplicates.
+- **Update call sites** when you extract; don't leave stale copies.
 
 ```typescript
 // ❌ same logic copy-pasted

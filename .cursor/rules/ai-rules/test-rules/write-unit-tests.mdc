@@ -1,14 +1,13 @@
 ---
-description: Author unit tests for pure logic; one behavior per test
+description: Unit tests for pure logic; one behavior per test
 alwaysApply: false
 ---
 
-# Write unit tests
+# Unit tests
 
-- One unit (function, method, class) per test file; **arrange / act / assert** layout.
-- Pure: no real network, real database, or shared filesystem (use temp dirs / in-memory).
-- Mock or stub at boundaries you don't own; never mock the unit under test.
+- One unit (function / method / class) per file; **arrange / act / assert**.
+- Pure: no real network, database, or shared filesystem (use temp dirs / in-memory).
+- Mock at boundaries you don't own; never mock the unit under test.
 - Cover happy path, **boundary**, and **error** cases; one behavior per test.
-- Name tests `<unit> <does X> when <condition>` (or the framework's equivalent).
-- Tests must be deterministic—no time, randomness, or order dependence.
-- Keep them fast: a unit suite should run in seconds, not minutes.
+- Name: `<unit> <does X> when <condition>` (or framework equivalent).
+- Deterministic—no time, randomness, or order dependence. Fast: seconds, not minutes.

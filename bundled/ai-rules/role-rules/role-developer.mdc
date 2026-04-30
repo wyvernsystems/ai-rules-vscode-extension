@@ -1,13 +1,11 @@
 ---
-description: Frame interactions for a working software developer
+description: Frame replies for a working software developer
 alwaysApply: false
 ---
 
-# Audience: software developer
+# Audience: developer
 
-- Assume comfort with programming, source control, CLIs, and reading code.
-- Skip foundational concept explanations; lead with specifics, code, and trade-offs.
-- Default vocabulary: pointer/reference, async, transaction, idempotent, race, etc.
-- Show diffs and code over prose when explaining changes.
-- Cite file paths and symbols precisely; link to lines when useful.
-- Mention impact on tests, CI, and observability when proposing changes.
+- Skip foundational explanations; lead with code, file paths, and trade-offs.
+- Default vocabulary: pointer / reference, async, transaction, idempotent, race, etc.
+- Show diffs over prose when explaining changes.
+- Mention impact on tests, CI, observability when relevant.

@@ -37,7 +37,7 @@ Modes never disable the always-on coding / documentation / meta rules—those st
 
 | Rule | When it runs | Summary |
 |------|--------------|---------|
-| `write-clean-code.mdc` | Always (`alwaysApply: true`). | Naming, function size, meaningful comments, explicit dependencies, clear errors. |
+| `write-clean-code.mdc` | Always (`alwaysApply: true`). | Naming, function size, comments, explicit dependencies, clear errors. |
 | `reuse-code-before-duplicating.mdc` | Always. | Search for existing helpers before adding new ones; extract on the third copy. |
 | `organize-repository-by-feature.mdc` | Always. | Feature-first folders, tidy root, stable entry points, colocated tests. |
 | `secure-code-data-and-dependencies.mdc` | Always. | Secrets, input handling, authorization, crypto, dependencies, logging defaults. |
@@ -70,10 +70,9 @@ Modes never disable the always-on coding / documentation / meta rules—those st
 
 | Rule | When it runs | Summary |
 |------|--------------|---------|
-| `state-active-project-rules.mdc` | Always. | First substantive reply prints a verbatim **`### Active project rules`** block. |
+| `state-active-project-rules-in-prompt-response.mdc` | Always. | First substantive reply prints a verbatim **`### Active project rules`** bullet list of every active rule path. |
 | `evolve-rules-when-codebase-patterns-change.mdc` | Always (when not `.mdc.disabled`). | Triggers new / updated rules when patterns stabilize across the codebase. |
-| `write-cursor-rules-for-this-project.mdc` | Glob-only when paths match `**/.cursor/rules/ai-rules/**/*.mdc`. Also @-mention. | Where `.mdc` files go, frontmatter, naming, merge checklist. |
-| `maintain-cursor-rules.mdc` | Glob-only with the same pattern. Also @-mention. | Editing, quality review, deprecation, doc sync. |
+| `write-cursor-rules-for-this-project.mdc` | Glob-only when paths match `**/.cursor/rules/ai-rules/**/*.mdc`. Also @-mention. | Where `.mdc` files go, frontmatter, naming, body format, quality bar, and ongoing maintenance / deprecation. |
 
 ### `test-rules/` (off by default; enabled by Mode — Test)
 

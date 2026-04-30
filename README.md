@@ -64,6 +64,6 @@ npx vsce package
 
 ### If "Active project rules" never appears in chat
 
-- Confirm **`rules-for-rules/state-active-project-rules.mdc`** is not disabled: the AI Rules extension may have renamed it to **`.mdc.disabled`**—use **AI Rules: Enable all rules (workspace)** or toggle that rule on.
+- Confirm **`rules-for-rules/state-active-project-rules-in-prompt-response.mdc`** is not disabled: the AI Rules extension may have renamed it to **`.mdc.disabled`**—use **AI Rules: Enable all rules (workspace)** or toggle that rule on.
 - In **Cursor Settings → Rules**, ensure project rules for this workspace are not turned off.
-- Cursor still depends on the **model** following instructions; if it skips the block, try **`@state-active-project-rules`** once in the thread.
+- Cursor still depends on the **model** following instructions; if it skips the block, try **`@state-active-project-rules-in-prompt-response`** once in the thread.

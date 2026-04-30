@@ -1,25 +1,15 @@
 ---
-description: Capture stated requirements in REQUIREMENTS.md and merge duplicates
+description: Capture stated requirements in REQUIREMENTS.md; merge duplicates
 alwaysApply: true
 ---
 
-# Append and deduplicate requirements
+# Append and dedupe requirements
 
-When the user states a **requirement**, **constraint**, **acceptance criterion**, or **non-goal**, persist it in **`REQUIREMENTS.md`** at the repo root (or **`docs/REQUIREMENTS.md`** if that already exists). Pick one canonical path per repo.
+When the user states a **requirement, constraint, acceptance criterion, or non-goal**, persist it in **`REQUIREMENTS.md`** at the repo root (or `docs/REQUIREMENTS.md` if that already exists).
 
-## Before appending
-
-1. **Read** the file (or the relevant section).
-2. **Search** for near-duplicates: same idea, different wording, or items the new text supersedes.
-3. **Consolidate** instead of stacking duplicates: merge bullets; mark superseded items as ~~struck~~ or note "**Superseded by:** …" with a date if the file already does that.
-4. **Group** under existing headings (e.g. *Functional*, *Non-functional*, *Out of scope*) when present; don't invent heavy structure for a tiny file.
-
-## Format
-
-- Short, testable bullets.
-- Stable IDs or numbering only if the file already uses them.
-- Use "MUST / SHOULD" only if the document already does.
-
-## Missing file
-
-- Create **`REQUIREMENTS.md`** with a title and `## Requirements` heading unless the user points to a different path.
+- **Read** the file before appending.
+- **Search** for near-duplicates—same idea, different wording.
+- **Consolidate**: merge bullets; mark superseded items as ~~struck~~ or note "**Superseded by:** …" with a date if the file already does.
+- **Group** under existing headings (e.g. *Functional*, *Non-functional*, *Out of scope*); don't invent heavy structure for a tiny file.
+- **Format**: short, testable bullets. Use IDs / numbering and "MUST / SHOULD" only if the file already does.
+- **Missing file**: create `REQUIREMENTS.md` with a title and `## Requirements` heading.

@@ -1,27 +1,13 @@
 ---
-description: Prefer LTS / current stable versions for languages, runtimes, compilers, and libraries
+description: LTS / stable runtimes and libraries; no EOL or pre-release in production
 alwaysApply: true
 ---
 
-# Prefer LTS and stable runtimes, compilers, and libraries
+# Prefer LTS and stable
 
-- **Default to LTS** for runtimes and toolchains (Node.js, Python, Java, .NET, Go, Rust, PostgreSQL, etc.). Never EOL or pre-release in production.
-- **Pin where it matters**: lock major versions (`engines`, `.nvmrc`, `.python-version`, `pyproject.toml`, `go.mod`, `Cargo.toml`, Docker base images). CI runs the same version as developers.
-- **Libraries**: latest stable minor of a maintained major. Avoid `0.x` in core paths; avoid unmaintained packages (~12+ months without releases, archived repo, or open critical CVEs).
-- **No alphas/betas/RCs in main branches**—keep them behind a feature branch or flag.
-- **Upgrade cadence**: plan an upgrade before the previous LTS hits EOL; track it as work.
-- **Verify before bumping**: read changelogs and migration notes; run tests; check transitive deps.
-- **Security patches**: apply current-LTS security releases promptly.
-
-```jsonc
-// ✅ package.json: LTS Node major + current stable libs
-{
-  "engines": { "node": ">=20.11.0 <21" },
-  "dependencies": {
-    "express": "^4.19.2",
-    "zod": "^3.23.8"
-  }
-}
-```
-
-❌ Bad signals: Node 17/19 in CI, `"react": "next"` or `^0.0.1-alpha.x` in production, libraries last released 3+ years ago with open security issues.
+- **Default to LTS** for runtimes and toolchains. No EOL or pre-release in production.
+- **Pin majors** where it matters (`engines`, `.nvmrc`, `.python-version`, `pyproject.toml`, `go.mod`, `Cargo.toml`, Docker base images). CI matches developers.
+- **Libraries**: latest stable minor of a maintained major. Avoid `0.x` in core paths and unmaintained packages (~12+ months without releases, archived repo, or open critical CVEs).
+- **No alphas / betas / RCs** in main branches—keep them behind a feature branch or flag.
+- **Upgrade before EOL**; track it as work. Read changelogs and run tests before bumping.
+- **Apply current-LTS security patches promptly.**

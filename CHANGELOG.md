@@ -6,6 +6,31 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+### Changed
+
+- **Rule pack: simplified and deduped.** Every rule under `.cursor/rules/ai-rules/`
+  rewritten as a tighter, scannable bullet list so models with limited context can
+  honor every active rule. Cross-rule overlap removed.
+- **Renamed**
+  `rules-for-rules/state-active-project-rules.mdc` →
+  `rules-for-rules/state-active-project-rules-in-prompt-response.mdc`. Body reduced
+  to a "print a bullet list of active rule paths" instruction—no embedded
+  per-rule descriptions—so the rendered `### Active project rules` block stays
+  short and accurate when rules are enabled / disabled.
+- Updated `bundled/manifest.json`, `ABOUT_RULES.md`, and `README.md` references
+  to the new filename.
+- Dropped the duplicate "Duplication: extract on third repetition" bullet from
+  `coding-rules/write-clean-code.mdc` (covered by
+  `coding-rules/reuse-code-before-duplicating.mdc`).
+
+### Removed
+
+- `rules-for-rules/maintain-cursor-rules.mdc` — content folded into
+  `rules-for-rules/write-cursor-rules-for-this-project.mdc`, which is now the
+  single source for both authoring and ongoing maintenance / deprecation
+  guidance for rule files. Both rules previously shared the same `globs` scope
+  (`**/.cursor/rules/ai-rules/**/*.mdc`) and overlapping content.
+
 ### Added
 
 - **Sidebar tree view** (`AI Rules: Rules`) contributed under a new activity-bar

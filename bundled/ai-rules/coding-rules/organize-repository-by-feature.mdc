@@ -1,18 +1,17 @@
 ---
-description: Keep the repository structure clean, predictable, and feature-oriented
+description: Feature-first repository layout
 alwaysApply: true
 ---
 
-# Organize the repository by feature and convention
+# Organize repo by feature
 
-- **Feature-first**: group by domain (e.g. `src/features/billing/`) over generic buckets. `utils/` and `components/` are for cross-feature code only.
-- **Predictable layout**: put new files where similar files live; propose a folder if nothing fits.
-- **One purpose per folder**: a folder should answer "what lives here?" in one sentence.
-- **Stable boundaries**: cross-feature imports go through public entry points (`index.ts`, `mod.rs`, `__init__.py`), not deep paths.
-- **Naming**: kebab-case unless the language dictates otherwise (PascalCase React components, snake_case Python). Be consistent within a folder.
+- **Feature-first**: group by domain (`src/features/billing/`) over generic buckets. `utils/`, `components/` are for cross-feature code only.
+- **One purpose per folder**: a folder answers "what lives here?" in one sentence.
+- **Stable boundaries**: cross-feature imports go through public entry points (`index.ts`, `mod.rs`, `__init__.py`)—not deep paths.
+- **Naming**: kebab-case unless the language dictates otherwise (PascalCase React components, snake_case Python).
 - **No junk in root**: keep root for top-level configs, `README`, `LICENSE`, tooling.
-- **Tests next to code**: colocate (`foo.ts` + `foo.test.ts`) or mirror under `tests/`—pick one per repo.
-- **Delete dead paths**: remove unused folders and generated artifacts; `.gitignore` instead of versioning them.
+- **Tests next to code** or mirrored under `tests/`—pick one per repo.
+- **Delete dead paths**: remove unused folders and generated artifacts; `.gitignore` instead of versioning.
 
 ```text
 src/

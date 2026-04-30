@@ -1,55 +1,17 @@
 ---
-description: Standard Markdown formatting for docs, READMEs, and notes when requested
+description: Standard Markdown formatting for docs, READMEs, notes
 globs: "**/*.{md,mdx}"
 alwaysApply: false
 ---
 
-# Format Markdown for readability and clean diffs
+# Markdown format
 
-Apply when creating or editing Markdown (READMEs, docs, RFCs, ADRs, release notes).
-
-## Structure
-
-- One **H1** per file at the top; use `##` and `###` for sections—don't skip levels.
-- Short paragraphs (1–4 sentences). Prefer bullets for enumerations.
-- Add a TOC only when the file has roughly 5+ top-level sections.
-
-## Headings and lists
-
+- **One H1** at the top; use `##` and `###` for sections—don't skip levels.
 - **Sentence case** for headings (`## Getting started`).
-- Use `-` for unordered lists; indent nested items by **2 spaces**.
-- Numbered lists only when order matters.
-
-## Code, links, emphasis
-
-- Always use **fenced code blocks** with a language tag (` ```ts `, ` ```bash `, ` ```json `).
-- Inline code with backticks for filenames, commands, identifiers (`package.json`, `npm test`, `UserService`).
-- Links: `[descriptive text](https://example.com)`. No bare URLs, no "click here".
+- **Bullets** with `-` for unordered lists; **2-space** indent for nested items. Numbered lists only when order matters.
+- **Fenced code blocks** with a language tag (` ```ts `, ` ```bash `, ` ```json `).
+- **Inline code** with backticks for filenames, commands, identifiers.
+- **Links**: `[descriptive text](url)`. No bare URLs. Relative links for in-repo files; absolute for external.
 - `**bold**` for key terms, `*italics*` sparingly. No ALL CAPS.
-
-## Tables
-
-```markdown
-| Field | Type   | Notes              |
-|-------|--------|--------------------|
-| id    | string | UUID v4            |
-| email | string | Lowercased on save |
-```
-
-Keep tables narrow; for wide content, prefer lists.
-
-## Hygiene
-
-- One sentence per line **or** wrap at ~100 cols—be consistent within a file.
-- Blank line before and after headings, lists, code fences, tables.
-- End with a single newline; no trailing whitespace.
-- Relative links for in-repo files (`./CONTRIBUTING.md`); absolute URLs for external.
-
-## README minimum
-
-1. Title and one-line summary
-2. Quickstart (install + run)
-3. Usage example
-4. Configuration / environment
-5. Scripts or commands
-6. Contributing / license pointers
+- **Hygiene**: blank line before / after headings, lists, code fences, tables. End with a single newline; no trailing whitespace.
+- **README minimum**: title + one-line summary, quickstart, usage example, configuration, scripts, contributing / license pointers.
