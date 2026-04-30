@@ -1,8 +1,8 @@
 {
   "name": "ai-rules",
-  "displayName": "AI Rules",
-  "description": "Install and manage Wyvern AI agent project rules under .cursor/rules/ai-rules (Cursor) with optional Cline sync to .clinerules/ai-rules/.",
-  "version": "1.0.2",
+  "displayName": "AI Rulebook",
+  "description": "AI Rulebook — install and manage a curated AI agent rule pack for Cursor under .cursor/rules/ai-rules/, with optional Cline sync to .clinerules/ai-rules/.",
+  "version": "1.1.0",
   "publisher": "WyvernSystemsLLC",
   "license": "MIT",
   "icon": "icon.png",
@@ -19,7 +19,9 @@
     "cursor-rules",
     "ai",
     "ai-agent",
+    "ai-rules",
     "rules",
+    "rulebook",
     "cline",
     "prompt-engineering",
     "code-assistant"
@@ -40,100 +42,100 @@
     "commands": [
       {
         "command": "aiRules.installWorkspace",
-        "title": "AI Rules: Install / update rules in workspace",
-        "category": "AI Rules"
+        "title": "AI Rulebook: Install / update rules in workspace",
+        "category": "AI Rulebook"
       },
       {
         "command": "aiRules.enableAllWorkspace",
-        "title": "AI Rules: Enable all rules (workspace)",
-        "category": "AI Rules"
+        "title": "AI Rulebook: Enable all rules (workspace)",
+        "category": "AI Rulebook"
       },
       {
         "command": "aiRules.disableAllWorkspace",
-        "title": "AI Rules: Disable all rules (workspace)",
-        "category": "AI Rules"
+        "title": "AI Rulebook: Disable all rules (workspace)",
+        "category": "AI Rulebook"
       },
       {
         "command": "aiRules.enableAllGlobal",
-        "title": "AI Rules: Enable all rules (global mirror)",
-        "category": "AI Rules"
+        "title": "AI Rulebook: Enable all rules (global mirror)",
+        "category": "AI Rulebook"
       },
       {
         "command": "aiRules.disableAllGlobal",
-        "title": "AI Rules: Disable all rules (global mirror)",
-        "category": "AI Rules"
+        "title": "AI Rulebook: Disable all rules (global mirror)",
+        "category": "AI Rulebook"
       },
       {
         "command": "aiRules.applyGlobalToWorkspace",
-        "title": "AI Rules: Copy global mirror into workspace",
-        "category": "AI Rules"
+        "title": "AI Rulebook: Copy global mirror into workspace",
+        "category": "AI Rulebook"
       },
       {
         "command": "aiRules.syncClineWorkspace",
-        "title": "AI Rules: Sync bundled rules to Cline (.clinerules/ai-rules)",
-        "category": "AI Rules"
+        "title": "AI Rulebook: Sync bundled rules to Cline (.clinerules/ai-rules)",
+        "category": "AI Rulebook"
       },
       {
         "command": "aiRules.showPackStatus",
-        "title": "AI Rules: Show active rules (green = active)",
-        "category": "AI Rules"
+        "title": "AI Rulebook: Show active rules (green = active)",
+        "category": "AI Rulebook"
       },
       {
         "command": "aiRules.hideActiveRules",
-        "title": "AI Rules: Hide active rules (no green)",
-        "category": "AI Rules"
+        "title": "AI Rulebook: Hide active rules (no green)",
+        "category": "AI Rulebook"
       },
       {
         "command": "aiRules.toggleIndividualRule",
-        "title": "AI Rules: Enable or disable a single rule…",
-        "category": "AI Rules"
+        "title": "AI Rulebook: Enable or disable a single rule…",
+        "category": "AI Rulebook"
       },
       {
         "command": "aiRules.resetWorkspaceRulesToDefaults",
-        "title": "AI Rules: Reset workspace rules folder to defaults…",
-        "category": "AI Rules"
+        "title": "AI Rulebook: Reset workspace rules folder to defaults…",
+        "category": "AI Rulebook"
       },
       {
         "command": "aiRules.modePlan",
-        "title": "AI Rules: Mode — Plan (architect role, no test rules)",
-        "category": "AI Rules"
+        "title": "AI Rulebook: Mode — Plan (architect role, no test rules)",
+        "category": "AI Rulebook"
       },
       {
         "command": "aiRules.modeBuild",
-        "title": "AI Rules: Mode — Build (developer role, no test rules)",
-        "category": "AI Rules"
+        "title": "AI Rulebook: Mode — Build (developer role, no test rules)",
+        "category": "AI Rulebook"
       },
       {
         "command": "aiRules.modeTest",
-        "title": "AI Rules: Mode — Test (tester role + all test rules)",
-        "category": "AI Rules"
+        "title": "AI Rulebook: Mode — Test (tester role + all test rules)",
+        "category": "AI Rulebook"
       },
       {
         "command": "aiRules.modeRole",
-        "title": "AI Rules: Mode — Role… (pick a single role to frame replies)",
-        "category": "AI Rules"
+        "title": "AI Rulebook: Mode — Role… (pick a single role to frame replies)",
+        "category": "AI Rulebook"
       },
       {
         "command": "aiRules.refreshTree",
-        "title": "AI Rules: Refresh sidebar",
-        "category": "AI Rules",
+        "title": "AI Rulebook: Refresh sidebar",
+        "category": "AI Rulebook",
         "icon": "$(refresh)"
       },
       {
         "command": "aiRules.revealRuleFile",
-        "title": "AI Rules: Open rule file",
-        "category": "AI Rules"
+        "title": "AI Rulebook: Open rule file",
+        "category": "AI Rulebook"
       },
       {
         "command": "aiRules.enableFolder",
-        "title": "AI Rules: Enable every rule in this folder",
-        "category": "AI Rules",
+        "title": "AI Rulebook: Enable every rule in this folder",
+        "category": "AI Rulebook",
         "icon": "$(check-all)"
       },
       {
         "command": "aiRules.disableFolder",
-        "title": "AI Rules: Disable every rule in this folder",
-        "category": "AI Rules",
+        "title": "AI Rulebook: Disable every rule in this folder",
+        "category": "AI Rulebook",
         "icon": "$(close-all)"
       }
     ],
@@ -141,7 +143,7 @@
       "activitybar": [
         {
           "id": "aiRulesSidebar",
-          "title": "AI Rules",
+          "title": "AI Rulebook",
           "icon": "$(checklist)"
         }
       ]
@@ -152,7 +154,7 @@
           "id": "aiRules.rulesTree",
           "name": "Rules",
           "icon": "$(checklist)",
-          "contextualTitle": "AI Rules"
+          "contextualTitle": "AI Rulebook"
         }
       ]
     },
@@ -238,7 +240,7 @@
       ]
     },
     "configuration": {
-      "title": "AI Rules",
+      "title": "AI Rulebook",
       "properties": {
         "aiRules.autoInstallOnOpenWorkspace": {
           "type": "boolean",

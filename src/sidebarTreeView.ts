@@ -195,7 +195,7 @@ export function bindRulesTreeView(
   view.onDidChangeCheckboxState(async (e) => {
     const root = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
     if (!root) {
-      vscode.window.showWarningMessage("AI Rules: open a folder before toggling rules.");
+      vscode.window.showWarningMessage("AI Rulebook: open a folder before toggling rules.");
       provider.refresh();
       return;
     }
@@ -209,7 +209,7 @@ export function bindRulesTreeView(
         await setRuleEnabled(rulesDir, node.ruleFile, enable);
       } catch (err) {
         const msg = err instanceof Error ? err.message : String(err);
-        vscode.window.showErrorMessage(`AI Rules: ${node.ruleFile} — ${msg}`);
+        vscode.window.showErrorMessage(`AI Rulebook: ${node.ruleFile} — ${msg}`);
       }
     }
     await afterChange();

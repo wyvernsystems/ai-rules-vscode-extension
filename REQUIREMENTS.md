@@ -1,7 +1,7 @@
 # Requirements
 
 This document captures the working requirements, constraints, and non-goals
-for the **AI Rules** extension. Short, testable bullets only — implementation
+for the **AI Rulebook** extension. Short, testable bullets only — implementation
 details belong in the code or in the rule files.
 
 ## Functional
@@ -23,9 +23,9 @@ details belong in the code or in the rule files.
   `aiRules.colorRulesInExplorer` (default `true`).
 - A pair of commands toggles the Explorer tint at the User scope without
   touching the sidebar:
-  - `AI Rules: Hide active rules (no green)` sets
+  - `AI Rulebook: Hide active rules (no green)` sets
     `aiRules.colorRulesInExplorer` to `false`.
-  - `AI Rules: Show active rules (green = active)` sets it back to `true`
+  - `AI Rulebook: Show active rules (green = active)` sets it back to `true`
     (idempotent), focuses the sidebar, and writes a plain-text snapshot to
     the Output channel.
 - Source of truth for rule text is `.cursor/rules/ai-rules/`. The VSIX ships
@@ -38,7 +38,7 @@ details belong in the code or in the rule files.
 - The `evolve-rules-when-codebase-patterns-change.mdc` rule is disabled
   immediately after a fresh install or reset, unless it was already enabled
   before the operation.
-- A sidebar tree view (`AI Rules: Rules`) lists every shipped rule grouped by
+- A sidebar tree view (`AI Rulebook: Rules`) lists every shipped rule grouped by
   subfolder, with one TreeItem checkbox per rule that toggles
   `<name>.mdc` ↔ `<name>.mdc.disabled`.
 - Folder rows in the sidebar expose inline **Enable** and **Disable** actions

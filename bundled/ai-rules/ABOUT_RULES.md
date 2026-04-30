@@ -4,7 +4,7 @@ This document describes how the pack is organized and what each rule file does.
 
 ## How rules work
 
-Cursor **project rules** are Markdown files with optional YAML **frontmatter**, stored under **`.cursor/rules/`**. In this repository they live in **`.cursor/rules/ai-rules/`**, grouped into five subfolders. Each file is `.mdc`, supporting `description`, `globs`, and `alwaysApply` in its frontmatter. Cursor decides which rules to include based on that metadata: `alwaysApply: true` rules are candidates for every conversation; others apply when **file paths match `globs`** (e.g. only while editing `*.md`) or when you **@-mention** a rule. Rule files toggle on / off by renaming between `<name>.mdc` and `<name>.mdc.disabled`—the AI Rules extension does this for you. Rules are versioned with the repo like normal docs.
+Cursor **project rules** are Markdown files with optional YAML **frontmatter**, stored under **`.cursor/rules/`**. In this repository they live in **`.cursor/rules/ai-rules/`**, grouped into five subfolders. Each file is `.mdc`, supporting `description`, `globs`, and `alwaysApply` in its frontmatter. Cursor decides which rules to include based on that metadata: `alwaysApply: true` rules are candidates for every conversation; others apply when **file paths match `globs`** (e.g. only while editing `*.md`) or when you **@-mention** a rule. Rule files toggle on / off by renaming between `<name>.mdc` and `<name>.mdc.disabled`—the AI Rulebook extension does this for you. Rules are versioned with the repo like normal docs.
 
 ## Layout
 
@@ -18,16 +18,16 @@ Cursor **project rules** are Markdown files with optional YAML **frontmatter**, 
 └── test-rules/              # how to design and write tests
 ```
 
-## Modes (provided by the AI Rules extension)
+## Modes (provided by the AI Rulebook extension)
 
 Four commands flip curated presets via the same enable / disable mechanism:
 
 | Command | Effect |
 |---------|--------|
-| **AI Rules: Mode — Plan** | Enables `role-architect`; disables every other role and every test rule. Coding / docs rules left alone. |
-| **AI Rules: Mode — Build** | Enables `role-developer`; disables every other role and every test rule. |
-| **AI Rules: Mode — Test** | Enables `role-tester` and **all** `test-rules/*`; disables every other role. |
-| **AI Rules: Mode — Role…** | QuickPick to enable a single role; disables the other roles. Doesn't touch test rules. |
+| **AI Rulebook: Mode — Plan** | Enables `role-architect`; disables every other role and every test rule. Coding / docs rules left alone. |
+| **AI Rulebook: Mode — Build** | Enables `role-developer`; disables every other role and every test rule. |
+| **AI Rulebook: Mode — Test** | Enables `role-tester` and **all** `test-rules/*`; disables every other role. |
+| **AI Rulebook: Mode — Role…** | QuickPick to enable a single role; disables the other roles. Doesn't touch test rules. |
 
 Modes never disable the always-on coding / documentation / meta rules—those stay on across modes.
 
@@ -86,6 +86,6 @@ Modes never disable the always-on coding / documentation / meta rules—those st
 
 For VS Code UI settings bundled with this workspace, see **`.vscode/settings.json`** at the repo root (that file is not a Cursor rule).
 
-## Extension vs repo (AI Rules VSIX)
+## Extension vs repo (AI Rulebook VSIX)
 
-The **AI Rules** extension ships a copy under **`bundled/ai-rules/`** with the same subfolder layout. The **source of truth** is **`.cursor/rules/ai-rules/`**. After editing rules, run `npm run sync-bundled` (and `npm run verify:bundled` to confirm they match) before packaging the extension.
+The **AI Rulebook** extension ships a copy under **`bundled/ai-rules/`** with the same subfolder layout. The **source of truth** is **`.cursor/rules/ai-rules/`**. After editing rules, run `npm run sync-bundled` (and `npm run verify:bundled` to confirm they match) before packaging the extension.

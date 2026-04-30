@@ -1,11 +1,11 @@
-# AI Rules — Cursor / VS Code extension
+# AI Rulebook — Cursor / VS Code extension
 
 **One-line:** This extension drops a curated set of AI agent **rules** into your
 project so Cursor (and Cline) reply more consistently — write cleaner code,
 keep docs current, frame answers for the right audience, and write proper
 tests when you ask for them.
 
-- **Display name:** AI Rules
+- **Display name:** AI Rulebook
 - **Package id:** `WyvernSystemsLLC.ai-rules`
 - **License:** MIT
 - **Source of truth for rules:** [`.cursor/rules/ai-rules/`](./.cursor/rules/ai-rules/)
@@ -40,13 +40,13 @@ and start chatting.
 
 ## Quickstart
 
-1. Install **AI Rules** in Cursor or VS Code.
+1. Install **AI Rulebook** in Cursor or VS Code.
 2. Open the project you want the rules to apply to. The first time the
    extension sees a project, it drops the bundled rule pack into
    `.cursor/rules/ai-rules/` and starts it in **Build mode** (developer role on,
    tests off). Existing `.cursor/rules/ai-rules/` folders are never overwritten.
 3. Click the checklist icon in the **activity bar** (left side) to open the
-   **AI Rules** sidebar.
+   **AI Rulebook** sidebar.
 4. Toggle individual rules with the checkboxes in the sidebar, or pick a
    preset with the **Mode — Plan / Build / Test / Role…** buttons at the top
    of the sidebar.
@@ -54,11 +54,11 @@ and start chatting.
 
 To opt out of the first-time auto-install, set
 `aiRules.autoInstallOnOpenWorkspace` to `false` and run
-**`AI Rules: Install / update rules in workspace`** when you want it.
+**`AI Rulebook: Install / update rules in workspace`** when you want it.
 
 ## Sidebar tree view — turn rules on and off
 
-The **AI Rules** sidebar (activity-bar icon, looks like a checklist) is the
+The **AI Rulebook** sidebar (activity-bar icon, looks like a checklist) is the
 primary place to enable / disable rules. It shows every shipped rule grouped
 by subfolder and uses color so the on / off state is obvious at a glance:
 
@@ -75,7 +75,7 @@ What you can do from the sidebar:
 | **Folder row** (e.g. `coding-rules/`) | Right-click → **Enable every rule in this folder** or **Disable every rule in this folder**. Inline check-all / close-all icons appear on hover. |
 | **Rule row checkbox** | Click the checkbox to flip the rule on / off (renames `<name>.mdc` ↔ `<name>.mdc.disabled`). |
 | **Rule row label** | Click the rule name to open the `.mdc` file in the editor. |
-| **`Show active rules` command** | Opens / focuses the sidebar so you can scan the colored on / off state, and writes a plain-text snapshot to **Output → AI Rules** for logging. |
+| **`Show active rules` command** | Opens / focuses the sidebar so you can scan the colored on / off state, and writes a plain-text snapshot to **Output → AI Rulebook** for logging. |
 
 Switching modes from the sidebar buttons only flips role and test rules —
 your always-on coding, documentation, and meta rules stay enabled. Manual
@@ -88,13 +88,13 @@ The same color scheme also applies to rule files in VS Code's built-in
 green, and any `<name>.mdc.disabled` shows up muted gray. So you can browse
 your rules folder like a normal folder and still see at a glance which rules
 are active. Set `aiRules.colorRulesInExplorer` to `false` (or run **`AI
-Rules: Hide active rules`**) to opt out; **`AI Rules: Show active rules`**
+Rules: Hide active rules`**) to opt out; **`AI Rulebook: Show active rules`**
 turns it back on. The sidebar tree always shows on / off colors regardless
 of this setting.
 
 ## All commands
 
-Every command lives under the **AI Rules:** prefix in the command palette.
+Every command lives under the **AI Rulebook:** prefix in the command palette.
 
 ### Install / update
 
@@ -138,7 +138,7 @@ storage. You can populate it once and then push it into any project.
 
 | Command | Plain English |
 |---------|---------------|
-| Show active rules (green = active) | Turns the Explorer green tint on (if you'd hidden it), focuses the AI Rules sidebar, and writes a plain-text snapshot to **Output → AI Rules**. |
+| Show active rules (green = active) | Turns the Explorer green tint on (if you'd hidden it), focuses the AI Rulebook sidebar, and writes a plain-text snapshot to **Output → AI Rulebook**. |
 | Hide active rules (no green) | Turns the Explorer green tint off (sets `aiRules.colorRulesInExplorer` to `false` at the user level). The sidebar tree's colors are unaffected. |
 | Refresh sidebar | Re-reads the rules folder from disk and redraws the sidebar tree. |
 | Open rule file | Opens a specific `.mdc` in the editor (used by the sidebar tree). |

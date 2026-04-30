@@ -1,5 +1,5 @@
 /**
- * Mode presets for the AI Rules pack.
+ * Mode presets for the AI Rulebook pack.
  *
  * Each mode flips a curated set of `role-rules/*` and `test-rules/*` files on
  * or off via the existing `setRuleEnabled` rename mechanism. We do not touch

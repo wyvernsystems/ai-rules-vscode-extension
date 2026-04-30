@@ -6,6 +6,29 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-04-29
+
+### Changed
+
+- **Renamed extension display: `AI Rules` → `AI Rulebook`.** All
+  user-visible strings updated:
+  - `package.json`: `displayName`, `description`, `keywords` (added
+    `rulebook` and `ai-rules`), every command `title` / `category`, the
+    activity-bar view container `title`, the rules tree
+    `contextualTitle`, and the `configuration.title` block.
+  - Every information / warning / error toast in `src/extension.ts`,
+    `src/sidebarTreeView.ts`, and `src/ruleStatusUi.ts` now says
+    "AI Rulebook" instead of "AI Rules".
+  - The "AI Rules" Output channel is now "AI Rulebook".
+  - `README.md`, `REQUIREMENTS.md`, and `bundled/ai-rules/ABOUT_RULES.md`
+    refer to the extension as **AI Rulebook**.
+- **Internal contracts unchanged.** The install slug stays `ai-rules`
+  (Marketplace id remains `WyvernSystemsLLC.ai-rules`), command IDs stay
+  `aiRules.*`, settings stay `aiRules.*`, view IDs stay
+  `aiRules.rulesTree` / `aiRulesSidebar`, and the on-disk rules layout
+  stays `.cursor/rules/ai-rules/` and `bundled/ai-rules/`. Any existing
+  keybindings, settings overrides, and on-disk rule folders keep working.
+
 ## [1.0.2] - 2026-04-29
 
 ### Changed
