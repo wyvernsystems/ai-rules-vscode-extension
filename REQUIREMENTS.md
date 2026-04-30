@@ -10,9 +10,13 @@ details belong in the code or in the rule files.
   `.cursor/rules/ai-rules/` of the open workspace.
 - On activation (and on `onDidChangeWorkspaceFolders`), if the workspace has
   no `.cursor/rules/ai-rules/` folder yet, the extension installs the bundled
-  defaults automatically. Existing rules folders are never overwritten by the
-  auto-install path. The behavior is gated by
-  `aiRules.autoInstallOnOpenWorkspace` (default `true`).
+  defaults automatically and then applies the **Build** mode profile
+  (`role-developer` on, other roles + `test-rules/*` off). Existing rules
+  folders are never overwritten by the auto-install path. The behavior is
+  gated by `aiRules.autoInstallOnOpenWorkspace` (default `true`).
+- The sidebar tree view colors active rule labels green and disabled rule
+  labels muted gray (via a `FileDecorationProvider`) so on / off state is
+  visible without reading the description column.
 - Source of truth for rule text is `.cursor/rules/ai-rules/`. The VSIX ships
   a byte-identical copy under `bundled/ai-rules/`. `npm run verify:bundled`
   must pass before packaging.

@@ -2,7 +2,7 @@
   "name": "ai-rules",
   "displayName": "AI Rules",
   "description": "Install and manage Wyvern AI agent project rules under .cursor/rules/ai-rules (Cursor) with optional Cline sync to .clinerules/ai-rules/.",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "publisher": "wyvernsystems",
   "license": "MIT",
   "icon": "icon.png",

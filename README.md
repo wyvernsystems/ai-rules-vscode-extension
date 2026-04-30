@@ -41,9 +41,10 @@ and start chatting.
 ## Quickstart
 
 1. Install **AI Rules** in Cursor or VS Code.
-2. Open the project you want the rules to apply to. The extension drops the
-   bundled rule pack into `.cursor/rules/ai-rules/` automatically the first
-   time it sees the project (no overwrite if you already have a folder there).
+2. Open the project you want the rules to apply to. The first time the
+   extension sees a project, it drops the bundled rule pack into
+   `.cursor/rules/ai-rules/` and starts it in **Build mode** (developer role on,
+   tests off). Existing `.cursor/rules/ai-rules/` folders are never overwritten.
 3. Click the checklist icon in the **activity bar** (left side) to open the
    **AI Rules** sidebar.
 4. Toggle individual rules with the checkboxes in the sidebar, or pick a
@@ -54,6 +55,31 @@ and start chatting.
 To opt out of the first-time auto-install, set
 `aiRules.autoInstallOnOpenWorkspace` to `false` and run
 **`AI Rules: Install / update rules in workspace`** when you want it.
+
+## Sidebar tree view — turn rules on and off
+
+The **AI Rules** sidebar (activity-bar icon, looks like a checklist) is the
+primary place to enable / disable rules. It shows every shipped rule grouped
+by subfolder and uses color so the on / off state is obvious at a glance:
+
+- **Green label + filled circle icon** — rule is active (`<name>.mdc` on
+  disk, loaded by Cursor).
+- **Dimmed gray label + empty circle icon** — rule is off
+  (`<name>.mdc.disabled` on disk, ignored by Cursor).
+
+What you can do from the sidebar:
+
+| Where | Action |
+|-------|--------|
+| Title bar buttons (top of the view) | One-click **Mode — Plan / Build / Test / Role…** presets, plus a **Refresh** icon. The overflow menu (`…`) holds bulk actions: Enable all, Disable all, Install / update, Reset, Show pack status. |
+| **Folder row** (e.g. `coding-rules/`) | Right-click → **Enable every rule in this folder** or **Disable every rule in this folder**. Inline check-all / close-all icons appear on hover. |
+| **Rule row checkbox** | Click the checkbox to flip the rule on / off (renames `<name>.mdc` ↔ `<name>.mdc.disabled`). |
+| **Rule row label** | Click the rule name to open the `.mdc` file in the editor. |
+| **`Show pack status` command** | Opens / focuses the sidebar so you can scan the colored on / off state, and writes a plain-text snapshot to **Output → AI Rules** for logging. |
+
+Switching modes from the sidebar buttons only flips role and test rules —
+your always-on coding, documentation, and meta rules stay enabled. Manual
+changes you make via the checkboxes always win until the next mode switch.
 
 ## All commands
 
@@ -101,7 +127,7 @@ storage. You can populate it once and then push it into any project.
 
 | Command | Plain English |
 |---------|---------------|
-| Show pack status (green = active) | Opens the **Output → AI Rules** channel and lists every rule (green = on, dim = off). |
+| Show pack status (green = active) | Focuses the AI Rules sidebar so you can see the colored on / off state, and writes a plain-text snapshot of the same info to **Output → AI Rules**. |
 | Refresh sidebar | Re-reads the rules folder from disk and redraws the sidebar tree. |
 | Open rule file | Opens a specific `.mdc` in the editor (used by the sidebar tree). |
 

@@ -5,6 +5,13 @@ import { isRuleEnabled, setRuleEnabled, workspaceRulesDir } from "./rulesOperati
 /** ID must match the view contributed in package.json. */
 export const RULES_TREE_VIEW_ID = "aiRules.rulesTree";
 
+/**
+ * Synthetic URI scheme used to attach decoration state to rule TreeItems.
+ * The path is `/on/<rule-path>` for active rules and `/off/<rule-path>` for
+ * disabled ones, so the FileDecorationProvider can look at the path alone.
+ */
+const RULE_STATUS_SCHEME = "ai-rules-status";
+
 type FolderItem = {
   kind: "folder";
   folder: string;
@@ -28,6 +35,46 @@ function leafName(rulePath: string): string {
   return base.replace(/\.mdc$/i, "");
 }
 
+function ruleStatusUri(ruleFile: string, enabled: boolean): vscode.Uri {
+  return vscode.Uri.from({
+    scheme: RULE_STATUS_SCHEME,
+    path: `/${enabled ? "on" : "off"}/${ruleFile}`,
+  });
+}
+
+/**
+ * Colors rule labels in the sidebar tree:
+ *   - active rules → `testing.iconPassed` (green in default themes)
+ *   - disabled rules → `disabledForeground` (muted)
+ * Stateless: the URI path encodes the on/off state, so refreshing the tree
+ * (which rebuilds resource URIs) updates colors without provider state.
+ */
+export class RuleStatusDecorationProvider implements vscode.FileDecorationProvider {
+  private readonly _onDidChange = new vscode.EventEmitter<undefined>();
+  readonly onDidChangeFileDecorations = this._onDidChange.event;
+
+  refresh(): void {
+    this._onDidChange.fire(undefined);
+  }
+
+  provideFileDecoration(uri: vscode.Uri): vscode.FileDecoration | undefined {
+    if (uri.scheme !== RULE_STATUS_SCHEME) {
+      return undefined;
+    }
+    const isActive = uri.path.startsWith("/on/");
+    if (isActive) {
+      return {
+        color: new vscode.ThemeColor("testing.iconPassed"),
+        tooltip: "Active — loaded by Cursor",
+      };
+    }
+    return {
+      color: new vscode.ThemeColor("disabledForeground"),
+      tooltip: "Disabled — `.mdc.disabled` on disk",
+    };
+  }
+}
+
 /**
  * Tree data provider that lists each shipped rule grouped by its top-level
  * subfolder in the manifest. Each rule row uses VS Code's TreeItem checkbox so
@@ -39,6 +86,13 @@ export class RulesTreeProvider implements vscode.TreeDataProvider<Node> {
 
   private readonly mdcs: readonly string[];
   private readonly folders: readonly string[];
+  /**
+   * Optional decoration provider whose color decorations also need to refresh
+   * whenever rule on / off state changes. Wiring it in here keeps every
+   * existing `treeProvider.refresh()` call site correct without forcing
+   * callers to know about decorations.
+   */
+  private decorations?: RuleStatusDecorationProvider;
 
   constructor(manifest: BundleManifest) {
     this.mdcs = manifest.files.filter((f) => f.endsWith(".mdc"));
@@ -52,8 +106,13 @@ export class RulesTreeProvider implements vscode.TreeDataProvider<Node> {
     this.folders = [...seen].sort();
   }
 
+  setDecorationProvider(decorations: RuleStatusDecorationProvider): void {
+    this.decorations = decorations;
+  }
+
   refresh(): void {
     this._onDidChange.fire(undefined);
+    this.decorations?.refresh();
   }
 
   getTreeItem(node: Node): Promise<vscode.TreeItem> {
@@ -101,6 +160,7 @@ export class RulesTreeProvider implements vscode.TreeDataProvider<Node> {
       enabled ? "pass-filled" : "circle-outline",
       new vscode.ThemeColor(enabled ? "testing.iconPassed" : "descriptionForeground")
     );
+    item.resourceUri = ruleStatusUri(node.ruleFile, enabled);
     item.command = {
       command: "aiRules.revealRuleFile",
       title: "Open rule file",

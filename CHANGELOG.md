@@ -6,6 +6,30 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-04-29
+
+### Added
+
+- **Auto-Build mode on first install.** The first-time auto-install now
+  finishes by applying the **Build** mode profile: `role-developer` is
+  enabled and the other roles + every `test-rules/*` start disabled. Users
+  who want a different default can flip modes from the sidebar title bar.
+- **Colored sidebar rule labels.** A new `FileDecorationProvider` paints
+  active rule labels in green (`testing.iconPassed`) and disabled rule
+  labels in muted gray (`disabledForeground`), so on / off state is obvious
+  in the sidebar tree without reading the description column.
+- **README** got a dedicated **Sidebar tree view — turn rules on and off**
+  section explaining the title-bar buttons, folder row actions, rule
+  checkboxes, and the `Show pack status` flow.
+
+### Changed
+
+- **`AI Rules: Show pack status`** now focuses the AI Rules sidebar (where
+  the colored state lives) and writes a plain-text log to **Output → AI
+  Rules** alongside it, instead of dumping ANSI escape codes that VS Code's
+  Output panel does not render. The Output channel is no longer auto-popped
+  on every install / mode change.
+
 ## [0.3.0] - 2026-04-29
 
 ### Added

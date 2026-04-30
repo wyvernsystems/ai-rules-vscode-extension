@@ -1,34 +1,32 @@
 import * as vscode from "vscode";
 import { isRuleEnabled } from "./rulesOperations";
 
-/** ANSI: green / dim for Output panel (supported in VS Code’s text output). */
-const GREEN = "\x1b[32m";
-const DIM = "\x1b[90m";
-const RESET = "\x1b[0m";
-
 export function createAiRulesOutputChannel(): vscode.OutputChannel {
   return vscode.window.createOutputChannel("AI Rules");
 }
 
+/**
+ * Writes the current pack state (active vs off) as plain text into the
+ * "AI Rules" Output channel. Visual highlighting (green for active, muted for
+ * disabled) lives in the sidebar tree via the file decoration provider; the
+ * Output channel is a plain-text log, so we deliberately avoid ANSI escapes
+ * here—VS Code does not render them and they show up as `[32m...` literals.
+ */
 export async function showPackStatusInOutput(
   channel: vscode.OutputChannel,
   rulesDir: string,
   mdcs: readonly string[]
 ): Promise<void> {
   channel.clear();
-  channel.show(true);
   channel.appendLine("AI Rules — `.cursor/rules/ai-rules` pack");
+  channel.appendLine("(open the AI Rules sidebar to see colored on/off state)");
   channel.appendLine("");
   for (const f of mdcs) {
     const on = await isRuleEnabled(rulesDir, f);
-    if (on) {
-      channel.appendLine(`${GREEN}active${RESET}\t${f}`);
-    } else {
-      channel.appendLine(`${DIM}off${RESET}\t\t${f}`);
-    }
+    channel.appendLine(`${on ? "active" : "off   "}\t${f}`);
   }
   channel.appendLine("");
-  channel.appendLine(`${GREEN}active${RESET} = loaded by Cursor; ${DIM}off${RESET} = \`.mdc.disabled\` on disk.`);
+  channel.appendLine("active = loaded by Cursor; off = `.mdc.disabled` on disk.");
 }
 
 export function quickPickIconsForRule(enabled: boolean): vscode.ThemeIcon | undefined {

@@ -31,7 +31,12 @@ import {
   workspaceRulesDir,
 } from "./rulesOperations";
 import { assertContainedPath, isSafeManifestEntry } from "./safePaths";
-import { bindRulesTreeView, RulesTreeProvider } from "./sidebarTreeView";
+import {
+  bindRulesTreeView,
+  RuleStatusDecorationProvider,
+  RulesTreeProvider,
+  RULES_TREE_VIEW_ID,
+} from "./sidebarTreeView";
 
 const LAST_SEEN_VERSION_KEY = "aiRules.lastSeenExtensionVersion";
 
@@ -62,8 +67,17 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
   const rulesOutput = createAiRulesOutputChannel();
   context.subscriptions.push(rulesOutput);
 
+  const decorationProvider = new RuleStatusDecorationProvider();
+  context.subscriptions.push(
+    vscode.window.registerFileDecorationProvider(decorationProvider)
+  );
   const treeProvider = new RulesTreeProvider(manifest);
-  /** Refresh handle used after every action that changes rule state on disk. */
+  treeProvider.setDecorationProvider(decorationProvider);
+  /**
+   * Refresh handle used after every action that changes rule state on disk.
+   * `treeProvider.refresh()` also fires decoration refresh internally, so
+   * call sites only need to refresh the tree.
+   */
   const refreshSidebar = (): Promise<void> => {
     treeProvider.refresh();
     return Promise.resolve();
@@ -110,9 +124,10 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
 
   /**
    * Idempotent first-time install: if the workspace has no `.cursor/rules/ai-rules`
-   * yet, drop the bundled defaults in. Existing rules folders are left untouched
-   * so the user never gets a surprise overwrite—use the explicit
-   * "Install / update" or "Reset" commands for that.
+   * yet, drop the bundled defaults in and start the project in Build mode
+   * (`role-developer` on, other roles + test rules off). Existing rules folders
+   * are left untouched so the user never gets a surprise overwrite—use the
+   * explicit "Install / update" or "Reset" commands for that.
    */
   const autoInstallIfMissing = async (): Promise<void> => {
     if (!getAiRulesBoolean("autoInstallOnOpenWorkspace", true)) {
@@ -132,8 +147,9 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     await installBundleToRulesDir(bundleDir, rulesDir, manifest, {
       applyEvolveOffUnlessWasEnabled: true,
     });
+    await applyModeProfile(rulesDir, MODE_PROFILES.build);
     const parts = [
-      "AI Rules: installed default rules into `.cursor/rules/ai-rules/`.",
+      "AI Rules: installed default rules into `.cursor/rules/ai-rules/` and started in Build mode (developer role on).",
     ];
     if (getAiRulesBoolean("autoSyncClineWhenInstalled", true) && isClineInstalled()) {
       await syncBundledMdcsToClinerules(root, bundleDir, manifest);
@@ -241,6 +257,8 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
 
   register("aiRules.showPackStatus", async () => {
     const root = ensureWorkspace();
+    treeProvider.refresh();
+    await vscode.commands.executeCommand(`${RULES_TREE_VIEW_ID}.focus`);
     await showPackStatusInOutput(rulesOutput, workspaceRulesDir(root), mdcs);
   });
 
