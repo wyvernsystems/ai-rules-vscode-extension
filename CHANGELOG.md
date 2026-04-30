@@ -6,6 +6,21 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-04-29
+
+### Fixed
+
+- **`AI Rules: Hide active rules` did nothing when a Workspace-level
+  `aiRules.colorRulesInExplorer` setting existed.** The command always wrote
+  to `ConfigurationTarget.Global` (User scope), which is shadowed by any
+  Workspace or Folder override—so the effective value never flipped to
+  `false` and the green tint stayed. Both `Hide active rules` and
+  `Show active rules` now write to whichever scope is currently overriding
+  the value (folder > workspace > user) via `WorkspaceConfiguration.inspect`.
+- Both commands now also call `explorerColors.refresh()` directly after the
+  setting update, so the Explorer's decoration cache re-queries even if the
+  `onDidChangeConfiguration` listener is debounced.
+
 ## [1.0.0] - 2026-04-29
 
 First **stable** release. Marketplace listing, packaging, and rule pack

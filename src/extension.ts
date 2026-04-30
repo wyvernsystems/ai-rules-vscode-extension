@@ -266,6 +266,29 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
   });
 
   /**
+   * Writes `aiRules.colorRulesInExplorer` to whichever scope is currently
+   * overriding the value, so toggling actually flips the *effective* value:
+   *
+   *   - if the user set it per-folder, update that folder
+   *   - else if it's set at the workspace level, update the workspace
+   *   - else update the User (Global) scope
+   *
+   * Without this, "Hide active rules" silently no-ops when a Workspace-level
+   * `true` shadows our `Global` write.
+   */
+  const setColorRulesInExplorer = async (enabled: boolean): Promise<void> => {
+    const cfg = vscode.workspace.getConfiguration("aiRules");
+    const inspect = cfg.inspect<boolean>("colorRulesInExplorer");
+    let target: vscode.ConfigurationTarget = vscode.ConfigurationTarget.Global;
+    if (inspect?.workspaceFolderValue !== undefined) {
+      target = vscode.ConfigurationTarget.WorkspaceFolder;
+    } else if (inspect?.workspaceValue !== undefined) {
+      target = vscode.ConfigurationTarget.Workspace;
+    }
+    await cfg.update("colorRulesInExplorer", enabled, target);
+  };
+
+  /**
    * Symmetric pair with `aiRules.hideActiveRules`: turns the Explorer green
    * tint back on (idempotent—no-op if already on), refreshes the sidebar,
    * focuses it, and writes a plain-text snapshot to the Output channel.
@@ -274,8 +297,9 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     const root = ensureWorkspace();
     const cfg = vscode.workspace.getConfiguration("aiRules");
     if (cfg.get<boolean>("colorRulesInExplorer", true) !== true) {
-      await cfg.update("colorRulesInExplorer", true, vscode.ConfigurationTarget.Global);
+      await setColorRulesInExplorer(true);
     }
+    explorerColors.refresh();
     treeProvider.refresh();
     await vscode.commands.executeCommand(`${RULES_TREE_VIEW_ID}.focus`);
     await showPackStatusInOutput(rulesOutput, workspaceRulesDir(root), mdcs);
@@ -283,13 +307,16 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
 
   /**
    * Removes the green / muted-gray tint from rule files in the workbench
-   * Explorer by flipping `aiRules.colorRulesInExplorer` to `false` at the
-   * Global scope. Sidebar coloring is unaffected—the sidebar exists to show
-   * on/off state, so removing color there would defeat its purpose.
+   * Explorer by flipping `aiRules.colorRulesInExplorer` to `false`. Writes to
+   * whichever scope currently overrides the value (folder > workspace > user)
+   * so the *effective* value flips—a Global-only write would be shadowed by
+   * a Workspace `true` and the colors would stay. Sidebar coloring is
+   * unaffected—the sidebar exists to show on/off state, so removing color
+   * there would defeat its purpose.
    */
   register("aiRules.hideActiveRules", async () => {
-    const cfg = vscode.workspace.getConfiguration("aiRules");
-    await cfg.update("colorRulesInExplorer", false, vscode.ConfigurationTarget.Global);
+    await setColorRulesInExplorer(false);
+    explorerColors.refresh();
     vscode.window.showInformationMessage(
       "AI Rules: Explorer rule colors hidden. Run “AI Rules: Show active rules” to bring them back."
     );
