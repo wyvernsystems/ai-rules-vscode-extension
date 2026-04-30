@@ -8,6 +8,21 @@ All notable changes to this project are documented here. The format follows
 
 ### Added
 
+- **Sidebar tree view** (`AI Rules: Rules`) contributed under a new activity-bar
+  view container `aiRulesSidebar`:
+  - Subfolder → rule hierarchy with a real **TreeItem checkbox** per rule that
+    flips `<name>.mdc` ↔ `<name>.mdc.disabled` via the existing rename helper.
+  - Click a rule's label to open the `.mdc` file in the editor.
+  - View title actions for **Plan / Build / Test / Role…** modes plus a
+    refresh icon; overflow includes bulk install / enable-all / disable-all /
+    reset / show-pack-status.
+  - Folder rows expose inline **Enable / Disable** actions that toggle every
+    rule under the selected subfolder.
+- New commands wiring the sidebar:
+  - `aiRules.refreshTree`, `aiRules.revealRuleFile`,
+  - `aiRules.enableFolder`, `aiRules.disableFolder`.
+- New module `src/sidebarTreeView.ts` (`RulesTreeProvider`,
+  `bindRulesTreeView`, `RULES_TREE_VIEW_ID`).
 - **Role rules** (`.cursor/rules/ai-rules/role-rules/`)—8 audience-framing rules,
   off by default, toggled by the new mode commands:
   - `role-developer.mdc`, `role-architect.mdc`, `role-tester.mdc`,

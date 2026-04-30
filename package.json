@@ -93,8 +93,126 @@
         "command": "aiRules.modeRole",
         "title": "AI Rules: Mode — Role… (pick a single role to frame replies)",
         "category": "AI Rules"
+      },
+      {
+        "command": "aiRules.refreshTree",
+        "title": "AI Rules: Refresh sidebar",
+        "category": "AI Rules",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "aiRules.revealRuleFile",
+        "title": "AI Rules: Open rule file",
+        "category": "AI Rules"
+      },
+      {
+        "command": "aiRules.enableFolder",
+        "title": "AI Rules: Enable every rule in this folder",
+        "category": "AI Rules",
+        "icon": "$(check-all)"
+      },
+      {
+        "command": "aiRules.disableFolder",
+        "title": "AI Rules: Disable every rule in this folder",
+        "category": "AI Rules",
+        "icon": "$(close-all)"
       }
     ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "aiRulesSidebar",
+          "title": "AI Rules",
+          "icon": "$(checklist)"
+        }
+      ]
+    },
+    "views": {
+      "aiRulesSidebar": [
+        {
+          "id": "aiRules.rulesTree",
+          "name": "Rules",
+          "icon": "$(checklist)",
+          "contextualTitle": "AI Rules"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "aiRules.modePlan",
+          "when": "view == aiRules.rulesTree",
+          "group": "navigation@1"
+        },
+        {
+          "command": "aiRules.modeBuild",
+          "when": "view == aiRules.rulesTree",
+          "group": "navigation@2"
+        },
+        {
+          "command": "aiRules.modeTest",
+          "when": "view == aiRules.rulesTree",
+          "group": "navigation@3"
+        },
+        {
+          "command": "aiRules.modeRole",
+          "when": "view == aiRules.rulesTree",
+          "group": "navigation@4"
+        },
+        {
+          "command": "aiRules.refreshTree",
+          "when": "view == aiRules.rulesTree",
+          "group": "navigation@9"
+        },
+        {
+          "command": "aiRules.enableAllWorkspace",
+          "when": "view == aiRules.rulesTree",
+          "group": "1_bulk@1"
+        },
+        {
+          "command": "aiRules.disableAllWorkspace",
+          "when": "view == aiRules.rulesTree",
+          "group": "1_bulk@2"
+        },
+        {
+          "command": "aiRules.installWorkspace",
+          "when": "view == aiRules.rulesTree",
+          "group": "2_workspace@1"
+        },
+        {
+          "command": "aiRules.resetWorkspaceRulesToDefaults",
+          "when": "view == aiRules.rulesTree",
+          "group": "2_workspace@2"
+        },
+        {
+          "command": "aiRules.showPackStatus",
+          "when": "view == aiRules.rulesTree",
+          "group": "3_inspect@1"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "aiRules.enableFolder",
+          "when": "view == aiRules.rulesTree && viewItem == aiRulesFolder",
+          "group": "inline@1"
+        },
+        {
+          "command": "aiRules.disableFolder",
+          "when": "view == aiRules.rulesTree && viewItem == aiRulesFolder",
+          "group": "inline@2"
+        },
+        {
+          "command": "aiRules.enableFolder",
+          "when": "view == aiRules.rulesTree && viewItem == aiRulesFolder",
+          "group": "1_bulk@1"
+        },
+        {
+          "command": "aiRules.disableFolder",
+          "when": "view == aiRules.rulesTree && viewItem == aiRulesFolder",
+          "group": "1_bulk@2"
+        }
+      ]
+    },
     "configuration": {
       "title": "AI Rules",
       "properties": {

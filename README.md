@@ -6,6 +6,18 @@ Installs Wyvern's Cursor project rules into **`.cursor/rules/ai-rules/`**, organ
 
 When **Cline** is installed (`saoudrizwan.claude-dev` or `saoudrizwan.cline-nightly`) and **`aiRules.autoSyncClineWhenInstalled`** is enabled (default **on**), the extension also mirrors bundled `.mdc` files into **`.clinerules/ai-rules/`** as `ai-rules-*.md` after workspace install, reset, copy-from-global, and when Cline is first detected.
 
+## Sidebar
+
+The extension contributes an **AI Rules** view container to the activity bar with a single tree view, **Rules**:
+
+- Top-level nodes are the rule subfolders (`coding-rules`, `documentation-rules`, `role-rules`, `rules-for-rules`, `test-rules`).
+- Each leaf is a rule with a **checkbox**: tick to enable, untick to disable. State maps to `<name>.mdc` ↔ `<name>.mdc.disabled` on disk.
+- Click a rule's label to open the underlying `.mdc` file.
+- Folder rows have inline actions to enable / disable every rule in that folder.
+- The view title bar exposes the four mode buttons (Plan, Build, Test, Role…), a refresh button, and the bulk install / reset commands via the `…` overflow.
+
+The same logic still works from the command palette—the sidebar is just a friendlier surface.
+
 ## Commands
 
 | Command | What it does |

@@ -24,6 +24,7 @@ import {
   wasEvolveEnabledBeforeCopy,
   workspaceRulesDir,
 } from "./rulesOperations";
+import { bindRulesTreeView, RulesTreeProvider } from "./sidebarTreeView";
 
 const LAST_SEEN_VERSION_KEY = "aiRules.lastSeenExtensionVersion";
 
@@ -52,6 +53,14 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
   const globalDir = globalMirrorDir(context.globalStorageUri.fsPath);
   const rulesOutput = createAiRulesOutputChannel();
   context.subscriptions.push(rulesOutput);
+
+  const treeProvider = new RulesTreeProvider(manifest);
+  /** Refresh handle used after every action that changes rule state on disk. */
+  const refreshSidebar = (): Promise<void> => {
+    treeProvider.refresh();
+    return Promise.resolve();
+  };
+  bindRulesTreeView(context, treeProvider, refreshSidebar);
 
   const ensureWorkspace = (): string => {
     const folder = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
@@ -122,6 +131,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     }
     vscode.window.showInformationMessage(parts.join(" "));
     await showPackStatusInOutput(rulesOutput, rulesDir, mdcs);
+    treeProvider.refresh();
   });
 
   register("aiRules.enableAllWorkspace", async () => {
@@ -130,6 +140,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     await setAllMdcsEnabled(rulesDir, mdcs, true);
     vscode.window.showInformationMessage("AI Rules: all bundled .mdc rules enabled in this workspace.");
     await showPackStatusInOutput(rulesOutput, rulesDir, mdcs);
+    treeProvider.refresh();
   });
 
   register("aiRules.disableAllWorkspace", async () => {
@@ -138,6 +149,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     await setAllMdcsEnabled(rulesDir, mdcs, false);
     vscode.window.showInformationMessage("AI Rules: all bundled .mdc rules disabled in this workspace.");
     await showPackStatusInOutput(rulesOutput, rulesDir, mdcs);
+    treeProvider.refresh();
   });
 
   register("aiRules.enableAllGlobal", async () => {
@@ -181,6 +193,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
         (clineSynced ? " Cline: synced to `.clinerules/ai-rules/`." : "")
     );
     await showPackStatusInOutput(rulesOutput, rulesDir, mdcs);
+    treeProvider.refresh();
   });
 
   register("aiRules.showPackStatus", async () => {
@@ -224,6 +237,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
       `AI Rules: ${picked.ruleFile} is now ${!on ? "enabled" : "disabled"}.`
     );
     await showPackStatusInOutput(rulesOutput, rulesDir, mdcs);
+    treeProvider.refresh();
   });
 
   const applyMode = async (mode: Mode): Promise<void> => {
@@ -236,6 +250,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
       `AI Rules: ${profile.summary}` + (clineSynced ? " Cline mirror updated." : "")
     );
     await showPackStatusInOutput(rulesOutput, rulesDir, mdcs);
+    treeProvider.refresh();
   };
 
   register("aiRules.modePlan", () => applyMode("plan"));
@@ -272,7 +287,93 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
         (clineSynced ? " Cline mirror updated." : "")
     );
     await showPackStatusInOutput(rulesOutput, rulesDir, mdcs);
+    treeProvider.refresh();
   });
+
+  register("aiRules.refreshTree", async () => {
+    treeProvider.refresh();
+  });
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand("aiRules.revealRuleFile", async (rulePath?: string) => {
+      if (!rulePath) {
+        return;
+      }
+      const root = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
+      if (!root) {
+        vscode.window.showWarningMessage("AI Rules: open a folder before opening a rule.");
+        return;
+      }
+      const rulesDir = workspaceRulesDir(root);
+      const enabledPath = path.join(rulesDir, rulePath);
+      const disabledPath = `${enabledPath}.disabled`;
+      const target = (await pathExists(enabledPath))
+        ? enabledPath
+        : (await pathExists(disabledPath))
+          ? disabledPath
+          : null;
+      if (!target) {
+        vscode.window.showWarningMessage(
+          `AI Rules: ${rulePath} is not in this workspace yet—run “Install / update rules in workspace” first.`
+        );
+        return;
+      }
+      const doc = await vscode.workspace.openTextDocument(target);
+      await vscode.window.showTextDocument(doc, { preview: true });
+    })
+  );
+
+  type FolderTreeNode = { kind: "folder"; folder: string };
+  const setFolderEnabled = async (
+    folderArg: FolderTreeNode | string | undefined,
+    enabled: boolean
+  ): Promise<void> => {
+    const folderName =
+      typeof folderArg === "string"
+        ? folderArg
+        : folderArg && folderArg.kind === "folder"
+          ? folderArg.folder
+          : undefined;
+    if (!folderName) {
+      vscode.window.showWarningMessage(
+        "AI Rules: pick a folder from the sidebar tree first."
+      );
+      return;
+    }
+    const root = ensureWorkspace();
+    const rulesDir = workspaceRulesDir(root);
+    const rules = treeProvider.rulesInFolder(folderName);
+    if (rules.length === 0) {
+      return;
+    }
+    for (const r of rules) {
+      await setRuleEnabled(rulesDir, r, enabled);
+    }
+    vscode.window.showInformationMessage(
+      `AI Rules: ${enabled ? "enabled" : "disabled"} every rule in ${folderName}/.`
+    );
+    await showPackStatusInOutput(rulesOutput, rulesDir, mdcs);
+    treeProvider.refresh();
+  };
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand("aiRules.enableFolder", async (folderArg) => {
+      try {
+        await setFolderEnabled(folderArg, true);
+      } catch (e) {
+        const msg = e instanceof Error ? e.message : String(e);
+        vscode.window.showErrorMessage(`AI Rules: ${msg}`);
+      }
+    }),
+    vscode.commands.registerCommand("aiRules.disableFolder", async (folderArg) => {
+      try {
+        await setFolderEnabled(folderArg, false);
+      } catch (e) {
+        const msg = e instanceof Error ? e.message : String(e);
+        vscode.window.showErrorMessage(`AI Rules: ${msg}`);
+      }
+    })
+  );
 
   register("aiRules.resetWorkspaceRulesToDefaults", async () => {
     const root = ensureWorkspace();
@@ -296,6 +397,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
         (clineSynced ? " Cline: synced to `.clinerules/ai-rules/`." : "")
     );
     await showPackStatusInOutput(rulesOutput, workspaceRulesDir(root), mdcs);
+    treeProvider.refresh();
   });
 
   const current = context.extension.packageJSON.version as string;
