@@ -1,6 +1,7 @@
 ---
 description: Append requirements to REQUIREMENTS.md; dedupe and merge
-alwaysApply: true
+globs: "**/REQUIREMENTS.md"
+alwaysApply: false
 ---
 
 # REQUIREMENTS.md

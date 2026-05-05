@@ -5,6 +5,7 @@
 .vscode-test/**
 src/**
 scripts/**
+tests/**
 node_modules/**
 **/*.map
 **/*.ts

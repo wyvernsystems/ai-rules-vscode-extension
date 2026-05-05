@@ -10,7 +10,7 @@ import { listBundledMdcs, readBundleManifest, type BundleManifest } from "./mani
 import {
   applyModeProfile,
   applyRolePick,
-  MODE_PROFILES,
+  getModeProfile,
   ROLE_RULES,
   type Mode,
 } from "./modes";
@@ -232,7 +232,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     await installBundleToRulesDir(bundleDir, rulesDir, manifest, {
       applyEvolveOffUnlessWasEnabled: true,
     });
-    await applyModeProfile(rulesDir, MODE_PROFILES.build);
+    await applyModeProfile(rulesDir, getModeProfile("build", mdcs));
     const parts = [
       "AI Rulebook: installed default rules into `.cursor/rules/ai-rules/` and started in Build mode (developer role on).",
     ];
@@ -439,7 +439,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
   const applyMode = async (mode: Mode): Promise<void> => {
     const root = ensureWorkspace();
     const rulesDir = workspaceRulesDir(root);
-    const profile = MODE_PROFILES[mode];
+    const profile = getModeProfile(mode, mdcs);
     await applyModeProfile(rulesDir, profile);
     const clineSynced = await maybeAutoSyncCline(root);
     vscode.window.showInformationMessage(

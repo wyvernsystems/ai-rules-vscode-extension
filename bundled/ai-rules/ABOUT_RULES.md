@@ -47,13 +47,13 @@ Switching Plan or Test **re-enables** the rules Build turns off. Install / auto-
 | `dense-session-handoff-context.mdc` | @-mention | One ultra-dense block to paste into a new chat (goal / done / stack / blockers / next). |
 | `low-token-session-habits.mdc` | `alwaysApply` when enabled | Terse replies; avoid redundant recap (used with Low-token mode). |
 
-### `documentation-rules/`
+### `documentation-rules/` (all glob-scoped to save tokens; file stays enabled)
 
-| Rule | Summary |
-|------|---------|
-| `append-and-deduplicate-requirements.mdc` | REQUIREMENTS.md upkeep. |
-| `update-changelog-for-notable-changes.mdc` | CHANGELOG for visible changes. |
-| `use-this-format-for-markdown-files.mdc` | Markdown discipline (`**/*.{md,mdx}`). |
+| Rule | Glob | Summary |
+|------|------|---------|
+| `append-and-deduplicate-requirements.mdc` | `**/REQUIREMENTS.md` | REQUIREMENTS.md upkeep. |
+| `update-changelog-for-notable-changes.mdc` | `**/CHANGELOG.md` | CHANGELOG for visible changes. |
+| `use-this-format-for-markdown-files.mdc` | `**/*.{md,mdx}` | Markdown discipline. |
 
 ### `role-rules/` (modes toggle)
 
@@ -63,9 +63,9 @@ Architect, developer, tester, cyber-expert, PM, beginner, expert, end-user—see
 
 | Rule | Summary |
 |------|---------|
-| `state-active-project-rules-in-prompt-response.mdc` | First reply lists active rules (verbatim block). |
-| `evolve-rules-when-codebase-patterns-change.mdc` | Add/update rules when patterns stabilize. |
-| `write-cursor-rules-for-this-project.mdc` | Authoring `.mdc` files (`**/.cursor/rules/ai-rules/**/*.mdc`). |
+| `state-active-project-rules-in-prompt-response.mdc` | `alwaysApply` — first reply lists active rules (compact block). |
+| `evolve-rules-when-codebase-patterns-change.mdc` | Glob `**/.cursor/rules/ai-rules/**/*.mdc` — propose new/updated rules when patterns stabilize. |
+| `write-cursor-rules-for-this-project.mdc` | Glob `**/.cursor/rules/ai-rules/**/*.mdc` — authoring spec for `.mdc` files. |
 
 ### `test-rules/` (Mode — Test enables all)
 

@@ -1,5 +1,5 @@
 ---
-description: Clear names, small functions, explicit errors—readable code
+description: Clear names, small functions, explicit errors—plus baseline safety
 alwaysApply: true
 ---
 
@@ -9,6 +9,5 @@ alwaysApply: true
 - **Functions**: one job; short; early returns over deep nesting.
 - **Comments**: why, not what.
 - **Deps**: parameters over globals; narrow interfaces.
-- **Errors**: fail fast with context; don’t swallow exceptions or vague sentinels.
-
-Bad: `proc(d)` returning null for magic threshold. Good: `isEligible(order)` with named constants.
+- **Errors**: fail fast with context; don't swallow exceptions or vague sentinels.
+- **Safety baseline**: no secrets in code/logs; treat external input as untrusted; parameterized queries—not string concat.

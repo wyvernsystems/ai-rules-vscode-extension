@@ -1,11 +1,8 @@
 ---
-description: Terse replies; minimal overhead—use with Mode — Low token
+description: Terse replies; no redundant recap—pairs with Mode — Low token
 alwaysApply: true
 ---
 
 # Low-token session
 
-- Default **short** answers; elaborate only when asked or ambiguity would cost extra turns.
-- Do **not** restate unchanged constraints each reply.
-- Prefer bullets over paragraphs; cite paths instead of pasting big excerpts.
-- Omit filler praise and redundant recaps unless the task requires proofreading tone.
+Short answers; bullets over prose; cite paths instead of pasting code. Skip filler / unchanged-constraint recaps. Elaborate only when asked or ambiguity would cost a turn.

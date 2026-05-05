@@ -6,6 +6,8 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+## [1.4.0] - 2026-05-05
+
 ### Added
 
 - **`context-rules/`** folder: `dense-session-handoff-context.mdc` (@-mention)
@@ -13,6 +15,8 @@ All notable changes to this project are documented here. The format follows
   for terse long-session behavior when enabled.
 - **Mode — Low token** (`aiRules.modeLowToken`): enables only the minimal rule
   subset for token-efficient long sessions (toolbar + command palette).
+- **Tests**: `tests/modes.test.mjs` runs under `node --test` against compiled
+  output (`npm test`). No new dependencies—uses Node's built-in test runner.
 
 ### Changed
 
@@ -23,11 +27,27 @@ All notable changes to this project are documented here. The format follows
   `write-clean-code` + `organize-repository-by-feature` + `reuse` +
   `remove-dead-code` + `prefer-LTS` stay on). **Plan** and **Test** restore the
   full coding + meta set.
-- **Removed** `coding-rules/verify-syntax-and-fix-before-finishing.mdc` from the
-  shipped pack.
+- **Lower `alwaysApply` footprint**: `update-changelog-for-notable-changes`
+  and `append-and-deduplicate-requirements` now scope to their target file
+  via `globs`; `evolve-rules-when-codebase-patterns-change` scopes to
+  `**/.cursor/rules/ai-rules/**/*.mdc`.
+- **`write-clean-code`** absorbs a one-line security baseline (no secrets,
+  validate input, parameterized queries) so Build retains baseline guardrails
+  even with `secure-code-data-and-dependencies` off.
+- **`state-active-project-rules-in-prompt-response`** body trimmed.
+- **`modes.ts`**: `MODE_PROFILES` replaced with `getModeProfile(mode, allMdcs)`;
+  Low-token's disable list is now derived from the loaded manifest instead of a
+  hand-maintained constant. Removed `EVERY_PACK_MDC`.
+- **README** points to `bundled/ai-rules/ABOUT_RULES.md` for per-rule and
+  per-mode detail; previous duplicated tables were removed.
 - **`npm run sync-bundled`**: manifest lists logical `*.mdc` paths even when the
   workspace ships only `*.mdc.disabled`; install / Cline sync resolve the file
   variant on disk.
+
+### Removed
+
+- `coding-rules/verify-syntax-and-fix-before-finishing.mdc` (modern AIs handle
+  syntax checking inline; the rule no longer earned its tokens).
 
 ## [1.3.1] - 2026-04-30
 

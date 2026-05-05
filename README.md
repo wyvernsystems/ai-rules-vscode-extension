@@ -150,20 +150,14 @@ storage. You can populate it once and then push it into any project.
 
 ## Modes
 
-A "mode" is a one-click preset. **Build** is optimized for day-to-day coding
-(fewer rules in context). **Plan** and **Test** turn the full coding + meta set
-back on. **Low token** keeps only a tiny subset for long sessions.
+One-click presets. **Build** is the lightweight everyday default; **Plan** and
+**Test** turn full coding + meta rules back on; **Low token** keeps only a
+minimal subset for long, token-efficient sessions; **Role…** picks one role.
 
-| Mode | Effect |
-|------|--------|
-| **Plan** | `role-architect` on; other roles + all test rules off; restores `rules-for-rules/*` and the “heavy” coding rules Build disables. |
-| **Build** | `role-developer` on; other roles + all test rules off; **`rules-for-rules/*` off**; **off** secure-code only (among coding rules). Docs + `write-clean-code` + `organize-repository-by-feature` + `reuse` + `remove-dead-code` + `prefer-LTS` stay on. |
-| **Test** | `role-tester` and every `test-rules/*` on; other roles off; restores full coding + `rules-for-rules/*`. |
-| **Low token** | `write-clean-code`, `organize-repository-by-feature`, `reuse`, all 3 documentation rules, plus `dense-session-handoff-context` and `low-token-session-habits`—minimal context. |
-| **Role…** | Picks one role; others off. Does not change test rules. |
-
-You can also flip individual rules manually any time, in the sidebar or via
-the command palette.
+Full per-mode rule lists live in
+[`bundled/ai-rules/ABOUT_RULES.md`](./bundled/ai-rules/ABOUT_RULES.md). Manual
+sidebar/command-palette toggles persist until the next mode switch replaces
+them.
 
 ## Settings
 
@@ -177,66 +171,10 @@ the command palette.
 
 ## Every rule that ships with this extension
 
-For longer descriptions read [`bundled/ai-rules/ABOUT_RULES.md`](./bundled/ai-rules/ABOUT_RULES.md).
-
-### `coding-rules/`
-
-| Rule | What it does |
-|------|--------------|
-| `write-clean-code.mdc` | Naming, function size, comments, explicit dependencies, clear errors. **On in Build.** |
-| `organize-repository-by-feature.mdc` | Feature-first layout, module boundaries. **On in Build.** |
-| `reuse-code-before-duplicating.mdc` | Search and compose; extract on the third copy. **On in Build.** |
-| `secure-code-data-and-dependencies.mdc` | Secrets, input, authz, crypto, deps, logging. **Off in Build.** |
-| `prefer-lts-stable-runtimes-and-libraries.mdc` | LTS stacks, pinning, maintenance. **On in Build.** |
-| `remove-dead-code-and-unused-files.mdc` | Remove dead code with evidence. **On in Build.** |
-
-### `context-rules/`
-
-| Rule | When | What it does |
-|------|------|----------------|
-| `dense-session-handoff-context.mdc` | @-mention or ask for a handoff | One paste-ready dense block (goal / done / stack / blockers / next) for a new chat. |
-| `low-token-session-habits.mdc` | `alwaysApply` when enabled (e.g. Low-token mode) | Terse replies; less redundant recap. |
-
-### `documentation-rules/`
-
-| Rule | When it runs | What it does |
-|------|--------------|--------------|
-| `update-changelog-for-notable-changes.mdc` | Always. | Keeps `CHANGELOG.md` current for user-visible changes. |
-| `append-and-deduplicate-requirements.mdc` | Always. | Captures stated requirements in `REQUIREMENTS.md`; merges near-duplicates. |
-| `use-this-format-for-markdown-files.mdc` | Only when editing `*.md` / `*.mdx` (or @-mentioned). | Standard Markdown structure, lists, code samples, links. |
-
-### `role-rules/` — off by default; turned on by mode commands
-
-These change **who the assistant is talking to**.
-
-| Rule | Audience framing |
-|------|------------------|
-| `role-developer.mdc` | Working software developer — skip basics, lead with code and trade-offs. |
-| `role-architect.mdc` | Lead with constraints, boundaries, and 2–3 viable approaches. |
-| `role-tester.mdc` | Lead with what to verify, expected vs. actual, and risk. |
-| `role-cyber-expert.mdc` | Treat everything as threat surface; STRIDE / OWASP framing. |
-| `role-product-manager.mdc` | Lead with user value, scope, sequencing, rollout risk. |
-| `role-beginner.mdc` | Define jargon; full commands; one safe path; explain *why*. |
-| `role-expert.mdc` | Skip foundations; surface non-obvious edge cases; primary sources. |
-| `role-end-user.mdc` | No code or jargon; describe what the user sees, clicks, and gets. |
-
-### `rules-for-rules/` — **off in Build** by default; on in Plan/Test
-
-| Rule | When it runs | What it does |
-|------|--------------|--------------|
-| `state-active-project-rules-in-prompt-response.mdc` | When enabled (`alwaysApply`). | First reply lists active rules under **`### Active project rules`**. |
-| `evolve-rules-when-codebase-patterns-change.mdc` | When enabled. | Suggests new / updated rules when patterns stabilize. |
-| `write-cursor-rules-for-this-project.mdc` | Glob when editing `.cursor/rules/ai-rules/**/*.mdc` (or @-mention). | Authoring spec for `.mdc` files. |
-
-### `test-rules/` — off by default; turned on by **Mode — Test**
-
-| Rule | Test type |
-|------|-----------|
-| `write-unit-tests.mdc` | Pure-logic units; arrange / act / assert; deterministic, fast. |
-| `write-smoke-tests.mdc` | Critical happy paths only; fail-fast; block builds. |
-| `write-regression-tests.mdc` | One test per fixed bug; reference issue / PR. |
-| `write-integration-tests.mdc` | Real boundaries (DB, HTTP, queue); ephemeral environments. |
-| `write-end-to-end-tests.mdc` | Top user journeys; stable selectors; flakes are bugs. |
+The shipped pack lives under `.cursor/rules/ai-rules/` (source) and
+`bundled/ai-rules/` (VSIX copy). For each rule's purpose, scope, mode
+behavior, and whether it's on by default, see
+[`bundled/ai-rules/ABOUT_RULES.md`](./bundled/ai-rules/ABOUT_RULES.md).
 
 ## Limitations — read this before you blame the rules
 
