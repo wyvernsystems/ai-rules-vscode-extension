@@ -28,9 +28,7 @@ export const TEST_RULES = [
 
 /** Coding rules turned **off** in Build mode (lighter developer default). */
 export const BUILD_OFF_CODING_RULES = [
-  "coding-rules/verify-syntax-and-fix-before-finishing.mdc",
   "coding-rules/secure-code-data-and-dependencies.mdc",
-  "coding-rules/prefer-lts-stable-runtimes-and-libraries.mdc",
 ] as const;
 
 export const RULES_FOR_RULES = [
@@ -52,7 +50,6 @@ export const EVERY_PACK_MDC = [
   "coding-rules/remove-dead-code-and-unused-files.mdc",
   "coding-rules/reuse-code-before-duplicating.mdc",
   "coding-rules/secure-code-data-and-dependencies.mdc",
-  "coding-rules/verify-syntax-and-fix-before-finishing.mdc",
   "coding-rules/write-clean-code.mdc",
   "context-rules/dense-session-handoff-context.mdc",
   "context-rules/low-token-session-habits.mdc",
@@ -119,7 +116,7 @@ export const MODE_PROFILES: Record<Mode, ModeProfile> = {
       ...RULES_FOR_RULES,
     ],
     summary:
-      "Build mode: developer on; tests off; rules-for-rules + heavy coding rules off (lightweight).",
+      "Build mode: developer on; tests off; rules-for-rules + secure-code rule off (lightweight).",
   },
   test: {
     enable: ["role-rules/role-tester.mdc", ...TEST_RULES, ...BUILD_AND_META_RESTORE],

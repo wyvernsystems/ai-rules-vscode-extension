@@ -178,7 +178,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
   /**
    * Idempotent first-time install: if the workspace has no `.cursor/rules/ai-rules`
    * yet, drop the bundled defaults in and start the project in Build mode
-   * (`role-developer` on; other roles + test rules off; lightweight coding +
+   * (`role-developer` on; other roles + test rules off; secure-code +
    * rules-for-rules off per Build profile). Existing rules folders
    * are left untouched so the user never gets a surprise overwrite—use the
    * explicit "Install / update" or "Reset" commands for that.

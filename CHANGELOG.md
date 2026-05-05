@@ -19,10 +19,12 @@ All notable changes to this project are documented here. The format follows
 - **Compressed** shipped `.mdc` rules for smaller context footprint without
   dropping core constraints.
 - **Mode — Build** is lighter by default: turns **off** all `rules-for-rules/*`
-  and **off** verify-syntax, secure-code, and prefer-LTS coding rules
-  (documentation rules + `write-clean-code` + `organize-repository-by-feature`
-  + `reuse` + `remove-dead-code` stay on). **Plan** and **Test** restore the
+  and **off** the secure-code coding rule only (documentation rules +
+  `write-clean-code` + `organize-repository-by-feature` + `reuse` +
+  `remove-dead-code` + `prefer-LTS` stay on). **Plan** and **Test** restore the
   full coding + meta set.
+- **Removed** `coding-rules/verify-syntax-and-fix-before-finishing.mdc` from the
+  shipped pack.
 - **`npm run sync-bundled`**: manifest lists logical `*.mdc` paths even when the
   workspace ships only `*.mdc.disabled`; install / Cline sync resolve the file
   variant on disk.

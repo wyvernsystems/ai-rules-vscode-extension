@@ -52,10 +52,10 @@ details belong in the code or in the rule files.
 - The pack is organized into six subfolders: `coding-rules/`,
   `context-rules/`, `documentation-rules/`, `role-rules/`, `rules-for-rules/`,
   `test-rules/`.
-- After install, documentation rules and the **light** coding rules
-  (`write-clean-code`, `organize-repository-by-feature`) are on; role and test
-  rules follow the **Build** profile; `rules-for-rules/*` and the heavy coding
-  rules Build disables are off until the user switches mode or enables them.
+- After install, documentation rules and most coding rules are on per the
+  **Build** profile; role and test rules follow Build; `rules-for-rules/*` and
+  the secure-code coding rule are off until the user switches mode or enables
+  them.
 - The `evolve-rules-when-codebase-patterns-change.mdc` rule is disabled
   immediately after a fresh install or reset, unless it was already enabled
   before the operation.
@@ -66,7 +66,7 @@ details belong in the code or in the rule files.
   that toggle every rule in that subfolder.
 - Mode commands flip curated presets:
   - **Mode — Plan**: enable `role-architect`; disable other roles and all test rules; enable full coding + `rules-for-rules/*` (restores rules Build turns off).
-  - **Mode — Build**: enable `role-developer`; disable other roles and all test rules; disable `rules-for-rules/*` and the heavy coding rules (verify-syntax, secure-code, prefer-LTS).
+  - **Mode — Build**: enable `role-developer`; disable other roles and all test rules; disable `rules-for-rules/*` and the secure-code coding rule only (other coding rules stay on per `modes.ts`).
   - **Mode — Test**: enable `role-tester` and every `test-rules/*`; disable other roles; enable full coding + `rules-for-rules/*`.
   - **Mode — Low token**: enable only the minimal rule subset defined in code (`modes.ts`) for long efficient sessions.
   - **Mode — Role…**: pick one role; the other roles get disabled (test rules unchanged).

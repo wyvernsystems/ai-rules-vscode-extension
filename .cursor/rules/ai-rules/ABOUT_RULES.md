@@ -20,9 +20,9 @@ Short Markdown rules with YAML frontmatter live under **`.cursor/rules/ai-rules/
 | Command | Effect |
 |---------|--------|
 | **Mode — Plan** | `role-architect` on; other roles + all test rules off; restores full coding + `rules-for-rules/*`. |
-| **Mode — Build** | `role-developer` on; other roles + test rules off; **`rules-for-rules/*` off**; **off**: verify-syntax, secure-code, reuse, remove-dead-code, prefer-LTS (lighter dev default). Docs + core coding (`write-clean-code`, `organize-repository-by-feature`) stay on. |
+| **Mode — Build** | `role-developer` on; other roles + test rules off; **`rules-for-rules/*` off**; **off**: secure-code only among coding rules (lighter dev default). Docs + `write-clean-code`, `organize-repository-by-feature`, `reuse`, `remove-dead-code`, `prefer-LTS` stay on. |
 | **Mode — Test** | `role-tester` + every `test-rules/*` on; other roles off; restores full coding + `rules-for-rules/*`. |
-| **Mode — Low token** | Only: `write-clean-code`, `organize-repository-by-feature`, `dense-session-handoff-context`, `low-token-session-habits`—minimal context for long sessions. |
+| **Mode — Low token** | Minimal set: `write-clean-code`, `organize-repository-by-feature`, `reuse`, all 3 documentation rules, `dense-session-handoff-context`, `low-token-session-habits`. |
 | **Mode — Role…** | Pick one role; others off. Does not change test rules. |
 
 Switching Plan or Test **re-enables** the rules Build turns off. Install / auto-install ends in **Build** mode (lightweight profile).
@@ -38,7 +38,6 @@ Switching Plan or Test **re-enables** the rules Build turns off. Install / auto-
 | `reuse-code-before-duplicating.mdc` | Search, compose, extract on third copy. |
 | `secure-code-data-and-dependencies.mdc` | Secrets, input, authz, crypto, deps, logs. |
 | `prefer-lts-stable-runtimes-and-libraries.mdc` | LTS stacks, pinning, maintenance. |
-| `verify-syntax-and-fix-before-finishing.mdc` | Re-read edits; run checks; fix regressions. |
 | `remove-dead-code-and-unused-files.mdc` | Remove dead code with evidence. |
 
 ### `context-rules/`
