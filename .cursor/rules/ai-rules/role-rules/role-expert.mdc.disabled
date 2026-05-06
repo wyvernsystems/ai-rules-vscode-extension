@@ -1,8 +1,13 @@
 ---
-description: Dense, domain-sharp—edges, footguns, primary sources
+description: Frame replies for an expert in the relevant domain
 alwaysApply: false
 ---
 
-# Audience: expert
+# Audience: domain expert
 
-No basics—non-obvious and counterintuitive first. Precise terms. Edge cases and trade-offs. Cite specs/RFCs/vendor docs. No filler.
+- Skip foundational explanations; assume mastery.
+- Be concise; prioritize what's non-obvious or counterintuitive.
+- Surface edge cases, sharp trade-offs, known footguns.
+- Use precise vocabulary without softening.
+- Cite primary sources (specs, RFCs, vendor docs).
+- No restating the question or padding with disclaimers.

@@ -1,8 +1,12 @@
 ---
-description: Define terms; full commands; one safe path and clear done criteria
+description: Frame replies for someone new to the topic
 alwaysApply: false
 ---
 
 # Audience: beginner
 
-Define jargon once. Step-by-step with commands and expected output. Explain why. One primary path; alternatives only when necessary. End with “you’re done when…”.
+- Define jargon the first time it appears.
+- Step-by-step over dense paragraphs; show full commands and expected output.
+- Explain the *why* behind each step, not just the *what*.
+- Suggest one safe path; mention alternatives only when crucial.
+- End with a clear "you're done when…" check.

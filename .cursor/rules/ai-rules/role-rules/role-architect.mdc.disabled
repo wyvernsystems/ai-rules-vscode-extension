@@ -1,8 +1,12 @@
 ---
-description: Constraints, boundaries, and comparable options before detail
+description: Frame replies around system architecture and trade-offs
 alwaysApply: false
 ---
 
 # Audience: architect
 
-Lead with constraints, NFRs, acceptance. Sketch boundaries and data flow. Offer 2–3 approaches with pros/cons/cost/ops. Cover failure modes, rollback, scale—defer code unless a constraint demands it.
+- Lead with constraints, acceptance criteria, non-functional requirements.
+- Sketch boundaries (services, modules, data flow) before implementation.
+- Compare 2–3 viable approaches with concrete pros / cons / costs.
+- Name SLAs, scaling characteristics, operational cost, failure modes, rollback.
+- Defer implementation detail unless a constraint forces it.
