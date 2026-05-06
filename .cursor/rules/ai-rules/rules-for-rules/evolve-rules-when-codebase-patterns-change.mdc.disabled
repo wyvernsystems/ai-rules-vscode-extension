@@ -1,25 +1,13 @@
 ---
-description: Add or update Cursor rules when patterns stabilize across the codebase
-alwaysApply: true
+description: Add/update project rules when patterns repeat or stabilize
+globs: "**/.cursor/rules/ai-rules/**/*.mdc"
+alwaysApply: false
 ---
 
-# Evolve rules with the code
+# Evolve rules with code
 
-Trigger this when **writing or reviewing code**, not only when editing rule files.
+Trigger when patterns stabilize: unstated repeat shape, recurring bug/review, library becomes default, security/perf/test norm settled.
 
-## Add or update a rule when
+**How**: diff vs `.cursor/rules/ai-rules/`; one topic per file; examples from repo; cross-link, don't duplicate.
 
-- A new pattern appears that no rule mentions.
-- The same shape is copied across several files.
-- Recurring bugs or review comments could be prevented with a short standard.
-- A library or tool becomes the default in multiple places.
-- Security, performance, or testing conventions stabilize.
-
-## How
-
-- Compare new code with current rules in `.cursor/rules/ai-rules/`.
-- One focused rule per topic; don't bloat unrelated ones.
-- Pull examples from real repo code.
-- Cross-link related rules instead of duplicating paragraphs.
-
-For format and quality bar, see [write-cursor-rules-for-this-project.mdc](mdc:.cursor/rules/ai-rules/rules-for-rules/write-cursor-rules-for-this-project.mdc).
+Format bar: [write-cursor-rules-for-this-project.mdc](mdc:.cursor/rules/ai-rules/rules-for-rules/write-cursor-rules-for-this-project.mdc)
